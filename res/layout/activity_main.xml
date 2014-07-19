@@ -6,6 +6,89 @@
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
+    <LinearLayout
+        android:id="@+id/includeLayout4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:background="#FF0000"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <EditText
+                android:id="@+id/search_edit1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:hint="한의원 이름 또는 병명" />
+
+            <EditText
+                android:id="@+id/search_edit2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:hint="지역 또는 지하철역" />
+
+            <EditText
+                android:id="@+id/search_edit3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:hint="사람 이름 또는 리스트 이름" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:background="#FF0000"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <Button
+                android:id="@+id/search_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.5"
+                android:background="#ffffff"
+                android:text="취소" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.5"
+                android:background="#ffffff"
+                android:text="검색" />
+        </LinearLayout>
+    </LinearLayout>
+
     <TabHost
         android:id="@+id/tabhost"
         android:layout_width="match_parent"
@@ -81,9 +164,59 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
-                    
-                    
-                    
+
+                    <LinearLayout
+                        android:id="@+id/topMenuLinearlayout2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3" >
+
+                        <ImageView
+                            android:id="@+id/ReView_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/TotalView_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/FollowView_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/includeLayout2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:padding="3dp" >
+
+                        <include
+                            android:id="@+id/reViewInfoXml"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            layout="@layout/reviewinfo" />
+
+                        <include
+                            android:id="@+id/totalViewInfoXml"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            layout="@layout/totalviewinfo" />
+
+                        <include
+                            android:id="@+id/followViewInfoXml"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            layout="@layout/followviewinfo" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -91,7 +224,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
-                    
+
                     <RelativeLayout
                         android:id="@+id/includeLayout3"
                         android:layout_width="fill_parent"
@@ -103,16 +236,55 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             layout="@layout/near_layout" />
-
                     </RelativeLayout>
-                    
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tab4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:weightSum="1" >
+
+                    <LinearLayout
+                        android:id="@+id/topMenuLinearlayout4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.3"
+                        android:background="#BDBDBD"
+                        android:orientation="vertical"
+                        android:weightSum="1" >
+
+                        <ImageView
+                            android:id="@+id/SearchView_btn1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="0.3"
+                            android:gravity="center"
+                            android:src="@drawable/search_edit_1" />
+
+                        <ImageView
+                            android:id="@+id/SearchView_btn2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="0.3"
+                            android:gravity="center"
+                            android:src="@drawable/search_edit_2" />
+
+                        <ImageView
+                            android:id="@+id/SearchView_btn3"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="0.3"
+                            android:gravity="center"
+                            android:src="@drawable/search_edit_3" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
