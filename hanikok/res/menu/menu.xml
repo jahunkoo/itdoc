@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/menu_setting"
+        android:title="menu_setting"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        />
+<item android:id="@+id/menu_addFriend"
+        android:title="menu_addFriend"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        />
+</menu>

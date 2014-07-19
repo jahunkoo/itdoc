@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDD"
+    android:orientation="vertical"
+    android:weightSum="9" >
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:orientation="vertical"
+        >
+    
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    
+    <TextView
+        android:id="@+id/help_Q6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCC"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:text="[안내] Q6 제외한 한의원을 복구하고 싶을 땐 어떻게 하나요?"
+        android:textSize="15sp"
+        android:textColor="#000000" />
+
+    <TextView 
+        android:id="@+id/help_A6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:text="A6 현재는 복구가 불가능합니다. 추후 제외한 한의원을 복구하는 기능을 추가할 예정입니다."
+        android:visibility="gone"
+        />
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#212122"
+        />
+    
+    <TextView
+        android:id="@+id/help_Q5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCC"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:text="[안내] Q5 &apos;제외&apos; 버튼은 무엇인가요?"
+        android:textSize="15sp"
+        android:textColor="#000000" />
+
+    
+    <TextView 
+        android:id="@+id/help_A5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:text="A5 '디스커버'에서 더 이상 보고 싶지 않은 식당이 있을경우, 식당 사진 위 '제외' 버튼을 누르면 더이상 '디스커버'에서 추천 맛집으로 보이지 않습니다."
+        android:visibility="gone"
+        />
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#212122"
+        />
+    
+    
+    
+    <TextView
+        android:id="@+id/help_Q4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCC"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:text="[안내] Q4 &apos;주변&apos;은 반경 몇 km 이내인가요?"
+        android:textSize="15sp"
+        android:textColor="#000000" />
+    
+    
+    <TextView 
+        android:id="@+id/help_A4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:text="A4 사용자의 현재 위치로부터 반경 1km이내의 주변 한의원을 보여줍니다."
+        android:visibility="gone"
+        />
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#212122"
+        />
+    
+
+    <TextView
+        android:id="@+id/help_Q3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCC"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:text="[안내] Q3 &apos;디스커버&apos;와 &apos;주변&apos;의 차이는 무엇인가요?"
+        android:textSize="15sp"
+        android:textColor="#000000" />
+    
+    
+    
+    <TextView 
+        android:id="@+id/help_A3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:text="A3 '디스커버' 메뉴에서는 한의콕 사용자들의 추천을 받은 한의원을 보여주며, '주변' 메뉴에서는 사용자의 현재 위치의 주변에 있는 한의원을 보여줍니다."
+        android:visibility="gone"
+        />
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#212122"
+        />
+    
+
+    <TextView
+        android:id="@+id/help_Q2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCC"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:text="[안내] Q2 영향력점수 (Influence point)는 무엇이며, 어떻게 받나요?"
+        android:textSize="15sp"
+        android:textColor="#000000" />
+    
+    
+    
+    
+    <TextView 
+        android:id="@+id/help_A2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:text="A2 영향력 점수는 한의콕 앱에서의 본인의 영향력을 나타내는 점수입니다. 본인ㅇ이 '가봤다'를 눌렀거나 '의견'을 남긴 식당을 다른 한의콕 사용자가 보고 '가고싶다'/'가봤다'를 눌렀을 경우, 본인의 영향력 점수가 올라갑니다."
+        android:visibility="gone"
+        />
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#212122"
+        />
+    
+
+    <TextView
+        android:id="@+id/help_Q1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBCBCC"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp"
+        android:text="[안내] Q1 Sign up을 해야 하는 이유는 무엇인가요?"
+        android:textSize="15sp"
+        android:textColor="#000000" />
+    
+    
+    <TextView 
+        android:id="@+id/help_A1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:text="A1 Sign up을 하지 않고도 트렌디한 맛집을 보거나 맛집 검색이 가능합니다. Sign up을 하면 그 외에도 친구들이 추천한 맛집, 본인이 팔로잉하는 사용자의 추천 맛집 등을 볼 수 있으며, 본인이 방문한 식당에 사진 또는 리뷰를 남길 수 있습니다."
+        android:visibility="gone"
+        />
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#212122"
+        />
+    
+</LinearLayout>
+</ScrollView>
+</LinearLayout>
+</LinearLayout>
