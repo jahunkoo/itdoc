@@ -1,14 +1,11 @@
 package clinicActivity;
 
-import org.w3c.dom.Text;
-
+import android.R;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.hanikok.R;
 
 public class ClinicActivity extends Activity {
 
