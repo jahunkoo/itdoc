@@ -28,12 +28,14 @@
                 android:id="@+id/near_list_location"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:textColor="#818181"
                 android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/near_list_like"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:textColor="#A3A0ED"
                 android:layout_weight="1" />
         </LinearLayout>
 

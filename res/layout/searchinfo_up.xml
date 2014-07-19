@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1" >
+
+    <LinearLayout
+        android:id="@+id/includeLayout4"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="#BDBDBD"
+        android:orientation="vertical"
+        android:weightSum="1" >
+
+        <EditText
+            android:id="@+id/search_edit1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:hint="한의원 이름 또는 병명" />
+
+        <EditText
+            android:id="@+id/search_edit2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:hint="지역 또는 지하철역" />
+
+        <EditText
+            android:id="@+id/search_edit3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:hint="사람 이름 또는 리스트 이름" />
+    </LinearLayout>
+
+</LinearLayout>

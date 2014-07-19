@@ -8,11 +8,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,52 +28,77 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener{
+public class MainActivity extends Activity implements OnClickListener, android.widget.AbsListView.OnScrollListener {
 
 	private short currentTab = 0; // 현재 탭상태 받는 것
+	private boolean isPressed = false; // 두번 누르면 종료 되기 위한 조건
+	Handler mHandler = null;
+	
+	TabHost tabHost = null; // 탭뷰 세팅
+	ActionBar actionBar = null; // 액션바 세팅 시작
+	
 
+	// ----------------뜨는 의원 카테고리---------------------------//
+	ImageView goPopView, goEditorlView; // 인기순, 에디터순 버튼
 	GridView pop_grid; // 인기순 그리드뷰
 	GridView editor_grid; // 에디터순 그리드뷰
-	ImageView goPopView, goEditorlView; // 인기순, 에디터순 버튼
 	View popView, editorView; // 인기순, 에디터순 레이아웃
-	TabHost tabHost = null; // 탭뷰 세팅
-	ActionBar actionBar = null; //액션바 세팅 시작
-	
-	ListView near_list;
-	
+	// -----------------------------------------------------------//
+
+	// ------------------소식 카테고리-----------------------------//
+	ImageView goReView, goTotalView, goFollowView; // 리뷰어, 전체, 팔로우 순 버튼
+	View reView, totalView, followView; // 리뷰어, 전체, 팔로우 순 레이아웃
+	// -----------------------------------------------------------//
+
+	// ------------------검색 카테고리-----------------------------//
+	ImageView goSearchView1; // 한이원 이름 또는 병명 검색창
+	ImageView goSearchView2; // 지역 또는 지하철역 검색창
+	ImageView goSearchView3; // 사람 이름 또는 리스트이름 검색창
+	View searchView1, searchView2, searchView3; // 검색창 레이아웃
+	View searchView_up; // 슬레이트 레이아웃
+	View searchView_down;
+	Button searchCancel;
+	// -----------------------------------------------------------//
+
+	private Animation mTranslateUpAnim;
+	private Animation aniShow, aniHide;
+	private boolean open = false;
+
+	// ------------------소식 카테고리-----------------------------//
+	ListView mListView;
+	private boolean mLockListView;
+	private ListAdapter listAdapter;
+	private LayoutInflater mInflater;
+
+	// -----------------------------------------------------------//
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
+		aniShow = AnimationUtils.loadAnimation(this, R.anim.translate_up);
+		aniHide = AnimationUtils.loadAnimation(this, R.anim.left_out);
+
 		setElements(); // 객체 생성부분, 리스너 세팅 부분 묶은 함수
-		
+
 		tabSetting(); // 탭뷰 호출
 
 		initPoplView();// 인기순 레이아웃 부터 보여줌
 
+		initReView(); // 리뷰어 레이아웃 부터 보여줌
+
+		// initSearchView(); // 검색 레이아웃 보여줌
+
 		actionBar.setTitle("뜨는 의원");
-		
-		
-		
 
 	}
-	
-	private void setElements(){
 
-		// 인기순, 에디터순 그리드뷰 등록
-		pop_grid = (GridView) findViewById(R.id.gridview_pop);
-		pop_grid.setAdapter(new MyAdapter(this));
-		editor_grid = (GridView) findViewById(R.id.gridview_editor);
-		editor_grid.setAdapter(new MyAdapter(this));
+	private void setElements() {
 
-		//근처 리스트 뷰 등록
-		near_list = (ListView) findViewById(R.id.near_Listview);
-		near_list.setAdapter(new ListAdapter(getApplicationContext()));
-		
-		
+		// -------------뜨는의원 카테고리-----------------------------//
 		// 인기순, 에디터순 버튼 등록
 		goPopView = (ImageView) findViewById(R.id.PopView_btn);
 		goEditorlView = (ImageView) findViewById(R.id.EditorView_btn);
@@ -76,16 +109,81 @@ public class MainActivity extends Activity implements OnClickListener{
 		popView = (View) findViewById(R.id.popInfoXml);
 		editorView = (View) findViewById(R.id.editorInfoXml);
 
-		
-		
-		//액션바에 객체 할당
+		// 인기순, 에디터순 그리드뷰 등록
+		pop_grid = (GridView) findViewById(R.id.gridview_pop);
+		pop_grid.setAdapter(new MyAdapter(this));
+		editor_grid = (GridView) findViewById(R.id.gridview_editor);
+		editor_grid.setAdapter(new MyAdapter(this));
+		// --------------------------------------------------------//
+
+		// -------------소식 카테고리-------------------------------//
+		// 리뷰어, 전체, 팔로우순 버튼 등록
+		goReView = (ImageView) findViewById(R.id.ReView_btn);
+		goTotalView = (ImageView) findViewById(R.id.TotalView_btn);
+		goFollowView = (ImageView) findViewById(R.id.FollowView_btn);
+		goReView.setOnClickListener(this);
+		goTotalView.setOnClickListener(this);
+		goFollowView.setOnClickListener(this);
+
+		// 인기순, 에디터순 레이아웃(xml)등록
+		reView = (View) findViewById(R.id.reViewInfoXml);
+		totalView = (View) findViewById(R.id.totalViewInfoXml);
+		followView = (View) findViewById(R.id.followViewInfoXml);
+		// --------------------------------------------------------//
+
+		// -------------검색 카테고리-------------------------------//
+		goSearchView1 = (ImageView) findViewById(R.id.SearchView_btn1);
+		goSearchView2 = (ImageView) findViewById(R.id.SearchView_btn2);
+		goSearchView3 = (ImageView) findViewById(R.id.SearchView_btn3);
+		goSearchView1.setOnClickListener(this);
+		goSearchView2.setOnClickListener(this);
+		goSearchView3.setOnClickListener(this);
+		searchCancel = (Button) findViewById(R.id.search_cancel);
+		searchCancel.setOnClickListener(this);
+		// 검색창 레이아웃(xml)등록
+		// searchView1 = (View) findViewById(R.id.searchViewInfoXml);
+		// searchView2 = (View) findViewById(R.id.searchViewInfoXml);
+		// searchView3 = (View) findViewById(R.id.searchViewInfoXml);
+		// searchView_up = (View) findViewById(R.id.searchEditInfoXml);
+		searchView_up = (View) findViewById(R.id.includeLayout4);
+		// searchView_down = (View) findViewById(R.id.topMenuLinearlayout4);
+		searchView_down = (View) findViewById(R.id.tabhost);
+		// searchView1.setVisibility(View.VISIBLE);
+		searchView_up.setVisibility(View.GONE);
+
+		// --------------------------------------------------------//
+
+		// 근처 리스트 뷰 등록
+		listAdapter = new ListAdapter(getApplicationContext(), mStrings);
+		addItems(12);
+
+		mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		// mListView.addFooterView(mInflater.inflate(R.layout.footer, null));
+
+		mListView = (ListView) findViewById(R.id.near_Listview);
+		mListView.setAdapter(listAdapter);
+
+		mListView.setOnScrollListener(this);
+		mLockListView = false;
+
+		// 액션바에 객체 할당
 		actionBar = getActionBar();
+		
+		//핸들러에 2초 대기 저장
+		
+		mHandler = new Handler(){
+
+			@Override
+			public void handleMessage(Message msg) {
+
+				if(msg.what == 0)
+				{
+					isPressed = false;
+				}
+			}
+		};
 	}
 
-	
-	
-	
-	
 	public class MyAdapter extends BaseAdapter {
 
 		private List<Item> items = new ArrayList<Item>();
@@ -180,7 +278,7 @@ public class MainActivity extends Activity implements OnClickListener{
 
 		switch (v.getId()) {
 
-		// 인기순, 에디터순 버튼 눌렀을 때 해당 레이아웃을 보여줌.
+		// 인기순, 에디터순 버튼을 눌렀을 때 해당 레이아웃을 보여줌.
 		case R.id.PopView_btn:
 			initPoplView();
 			break;
@@ -188,7 +286,98 @@ public class MainActivity extends Activity implements OnClickListener{
 		case R.id.EditorView_btn:
 			initEditorView();
 			break;
+
+		// 리뷰어, 전체, 팔로우 버튼을 눌렀을 때 해당 레이아웃을 보여줌.
+		case R.id.ReView_btn:
+			initReView();
+			break;
+
+		case R.id.TotalView_btn:
+			initTotalView();
+			break;
+
+		case R.id.FollowView_btn:
+			initFollowView();
+			break;
+
+		case R.id.SearchView_btn1:
+			// changeImage();
+			// searchView_up.setVisibility(View.VISIBLE);
+			// searchView_up.bringToFront();
+			// searchView_up.setVisibility(View.VISIBLE);
+			// searchView_up.startAnimation(mTranslateUpAnim);
+			searchView_down.setVisibility(View.GONE); // 탭뷰 숨김
+			searchView_up.setVisibility(View.VISIBLE); // 검색창을 보여줌
+			searchView_up.startAnimation(aniShow); // 애니메이션 효과
+
+			// searchView_down.setVisibility(View.GONE);
+
+			break;
+
+		case R.id.SearchView_btn2:
+			// changeImage();
+			break;
+
+		case R.id.SearchView_btn3:
+			// changeImage();
+			break;
+		case R.id.search_cancel:
+			searchView_up.setVisibility(View.GONE);
+			searchView_down.setVisibility(View.VISIBLE);
+			break;
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+
+		if (searchView_up.getVisibility() == View.VISIBLE) {
+			searchView_up.setVisibility(View.GONE);
+			searchView_down.setVisibility(View.VISIBLE);
+		} else {
+			
+			if (!isPressed){
+				  Toast.makeText(MainActivity.this, "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+				  isPressed = true;
+				  mHandler.sendEmptyMessageDelayed(0, 2000);
+			}
+			else{
+				super.onBackPressed();	
+			}
+		}
+	}
+	
+	
+	public class PageAnimationListener implements AnimationListener {
+
+		public void onAnimationEnd(Animation arg0) {
+			// 애니메이션이 종료 되었을때 나머지 뷰들은 보이지 않게 한다.
+			/*
+			 * if (imageIndex == 0) { mImgView02.setVisibility(View.INVISIBLE);
+			 * mImgView03.setVisibility(View.INVISIBLE);
+			 * 
+			 * } else if (imageIndex == 1) {
+			 * mImgView01.setVisibility(View.INVISIBLE);
+			 * mImgView03.setVisibility(View.INVISIBLE);
+			 * 
+			 * } else if (imageIndex == 2) {
+			 * mImgView01.setVisibility(View.INVISIBLE);
+			 * mImgView02.setVisibility(View.INVISIBLE);
+			 * 
+			 * }
+			 */
+		}
+
+		public void onAnimationRepeat(Animation arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void onAnimationStart(Animation arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 
 	// 인기순 레이아웃
@@ -206,6 +395,46 @@ public class MainActivity extends Activity implements OnClickListener{
 		popView.setVisibility(View.GONE);
 		goPopView.setImageResource(R.drawable.pop_btn_open);
 		goEditorlView.setImageResource(R.drawable.editor_btn_over);
+
+	}
+
+	// 리뷰어 레이아웃
+	private void initReView() {
+		totalView.setVisibility(View.GONE);// 전체 레이아웃 숨김
+		followView.setVisibility(View.GONE);// 팔로우 레이아웃 숨김
+		reView.setVisibility(View.VISIBLE);// 리뷰어 레이아웃 보여줌
+		goReView.setImageResource(R.drawable.review_btn_over); // 리뷰어 버튼 롤오버
+		goTotalView.setImageResource(R.drawable.total_btn_open); // 전체 버튼
+		goFollowView.setImageResource(R.drawable.follow_btn_open); // 팔로우 버튼
+	}
+
+	// 전체 레이아웃
+	private void initTotalView() {
+		totalView.setVisibility(View.VISIBLE);// 전체 레이아웃 보여줌
+		followView.setVisibility(View.GONE);// 팔로우 레이아웃 숨김
+		reView.setVisibility(View.GONE);// 리뷰어 레이아웃 숨김
+		goReView.setImageResource(R.drawable.review_btn_open); // 리뷰어 버튼
+		goTotalView.setImageResource(R.drawable.total_btn_over); // 전체 버튼 롤오버
+		goFollowView.setImageResource(R.drawable.follow_btn_open); // 팔로우 버튼
+	}
+
+	// 팔로우 레이아웃
+	private void initFollowView() {
+		totalView.setVisibility(View.GONE);// 전체 레이아웃 숨김
+		followView.setVisibility(View.VISIBLE);// 팔로우 레이아웃 숨김
+		reView.setVisibility(View.GONE);// 리뷰어 레이아웃 보여줌
+		goReView.setImageResource(R.drawable.review_btn_open); // 리뷰어 버튼
+		goTotalView.setImageResource(R.drawable.total_btn_open); // 전체 버튼
+		goFollowView.setImageResource(R.drawable.follow_btn_over); // 팔로우 버튼 롤오버
+	}
+
+	// 검색 레이아웃
+	private void initSearchView() {
+		// totalView.setVisibility(View.GONE);// 전체 레이아웃 숨김
+		// followView.setVisibility(View.VISIBLE);// 팔로우 레이아웃 숨김
+		// reView.setVisibility(View.GONE);// 리뷰어 레이아웃 보여줌
+		// searchView1.setVisibility(View.GONE);// 검색 레이아웃 보여줌
+		// searchView_up.setVisibility(View.VISIBLE);
 
 	}
 
@@ -229,10 +458,11 @@ public class MainActivity extends Activity implements OnClickListener{
 		tabHost = (TabHost) findViewById(R.id.tabhost);
 		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			@Override
-			public void onTabChanged(String tabId) { //각각의 탭이 변할때의 리스너
+			public void onTabChanged(String tabId) { // 각각의 탭이 변할때의 리스너
 				if ("Tab1".equals(tabId)) {
 					currentTab = 0;
 					actionBar.setTitle("뜨는 의원");
+					actionBar.setDisplayHomeAsUpEnabled(false);
 				}
 				if ("Tab2".equals(tabId)) {
 					currentTab = 1;
@@ -240,20 +470,20 @@ public class MainActivity extends Activity implements OnClickListener{
 				}
 				if ("Tab3".equals(tabId)) {
 					currentTab = 2;
-					actionBar.setTitle("추천");
+					actionBar.setTitle("주변");
 				}
 				if ("Tab4".equals(tabId)) {
 					currentTab = 3;
 					actionBar.setTitle("검색");
 				}
-				if ("Tab5".equals(tabId)) { //설정을 누를때 새로운 액티비티를 연다
-					tabHost.setCurrentTab(currentTab); // 설정을 누르기 전의 탭의 상태로 변환 한다.
+				if ("Tab5".equals(tabId)) { // 설정을 누를때 새로운 액티비티를 연다
+					tabHost.setCurrentTab(currentTab); // 설정을 누르기 전의 탭의 상태로 변환
+														// 한다.
 					Intent intent = new Intent(MainActivity.this, profileActivity.class);
 					startActivity(intent);
 				}
 			}
-			
-			
+
 		});
 		tabHost.setup();
 
@@ -291,6 +521,68 @@ public class MainActivity extends Activity implements OnClickListener{
 		tabHost.setCurrentTab(0);
 	}
 
-	
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		int count = totalItemCount - visibleItemCount;
+
+		/*
+		 * Log.d("kim", "firstVisibleItem is " + firstVisibleItem); Log.d("kim",
+		 * "visibleItemCount is " + visibleItemCount); Log.d("kim",
+		 * "totalItemCount is " + totalItemCount); Log.d("kim", "count is " +
+		 * count); Log.d("kim", "mLockListView is " + mLockListView);
+		 */
+
+		if (firstVisibleItem >= count && totalItemCount != 0 && mLockListView == false) {
+			addItems(12);
+		}
+
+	}
+
+
+	private void addItems(final int size) {
+		// 아이템을 추가하는 동안 중복 요청을 방지하기 위해 락을 걸어둡니다.
+		mLockListView = true;
+
+		Runnable run = new Runnable() {
+			@Override
+			public void run() {
+				listAdapter.additem("additem", "additem", "additem", mStrings[11]);
+				listAdapter.additem("편강 한의원", "서울 중구", "Like:77", mStrings[10]);
+				listAdapter.additem("특별한별 한의원", "서울 성동구", "Like : 67", mStrings[9]);
+				listAdapter.additem("맑은숲 한의원", "서울 강남구", "Like:56", mStrings[8]);
+				listAdapter.additem("삼성 한의원", "서울 노원구", "Like:43", mStrings[7]);
+				listAdapter.additem("고운누리 한의원", "서울 강서구", "Like:41", mStrings[6]);
+				listAdapter.additem("풀입 한의원", "서울 강남구", "Like:31", mStrings[5]);
+				listAdapter.additem("경희 한의원", "서울 성북구", "Like:21", mStrings[4]);
+				listAdapter.additem("한림 병원", "서울 중구", "Like:20", mStrings[3]);
+				listAdapter.additem("버드나무 한의원", "서울 강남구", "Like:17", mStrings[2]);
+				listAdapter.additem("자연과 한의원", "서울 용산구", "Like:11", mStrings[1]);
+				listAdapter.additem("선재 한의원", "서울 동대문구", "Like:5", mStrings[0]);
+
+				listAdapter.notifyDataSetChanged();
+				mLockListView = false;
+			}
+
+		};
+
+		Handler handler = new Handler();
+		handler.postDelayed(run, 100);
+
+	}
+
+	private String[] mStrings = { "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test1.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test2.jpg",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test3.jpg", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test4.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test5.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test6.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test7.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test8.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test9.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test10.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test11.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test12.png"
+
+	};
+	
 }

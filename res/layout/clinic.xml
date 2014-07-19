@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDD" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/img_clinicPicture"
+                android:layout_width="match_parent"
+                android:layout_height="170dp" />
+
+            <TextView
+                android:id="@+id/clinic_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/img_clinicPicture"
+                android:background="#20000000"
+                android:text="경희한의원"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/clinic_major"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/clinic_name"
+                android:background="#20000000"
+                android:text="어께결림 / 자궁근종" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_clinicPicture"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:text="김경민 님이 이곳을 좋아합니다." />
+       
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+                <TextView 
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical"
+                    android:text="상세 정보"
+                    />
+                <TextView 
+                    android:id="@+id/tv_clinicDetail"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:text="이 곳에는 한의원의 상세 정보가 들어갑니다. 예를 들면  이 한의원은 어께도 잘하고 머리 어께 무릎 발 무릎 발 만병통치 불로장생의 한의원 입니다. 뭐 이런식으로"
+                    />
+                
+            </LinearLayout>
+             <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+                <TextView 
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical"
+                    android:text="전화"
+                    />
+                <TextView 
+                    android:id="@+id/tv_clinicPhone"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:text="010-1234-1234"
+                    />
+                
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+                <TextView 
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical"
+                    android:text="주소"
+                    />
+                <TextView 
+                    android:id="@+id/tv_location"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:text="서울시 동대문구 회기동 경희대학교 507-2번방 우리 사무실"
+                    />
+                
+            </LinearLayout>
+            
+             <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+                <TextView 
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical"
+                    android:text="가격"
+                    />
+                <TextView 
+                    android:id="@+id/tv_Price"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:text="1억 5천만원"
+                    />
+                
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+                <TextView 
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical"
+                    android:text="진료 시간"
+                    />
+                <TextView 
+                    android:id="@+id/tv_workTime"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:text="25시간 편의점 근무식 한의원"
+                    />
+                
+            </LinearLayout>
+            
+             <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+                <Button 
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center_vertical"
+                    android:text="없어진 한의원 이예요"
+                    />
+                <Button 
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:text="정보가 잘못 됐어요"
+                    />
+                
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/clinic_somebody_add_this"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#700100FF"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="가고 싶다" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="가봤다" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="공유하기" />
+    </LinearLayout>
+
+</RelativeLayout>
