@@ -197,9 +197,9 @@ public class JsonParser {
 			JSONObject indexobj = jsonArray.getJSONObject(i);
 
 			kmClinicView.setId(indexobj.getInt("id"));
-			Log.d("kim", kmClinicView.toString());
 			kmClinicView.setName(indexobj.getString("name"));
-			kmClinicView.setMapPoint(indexobj.getString("mapPoint"));
+			// 맵포인트는 아직 존재하지 않아서 받아오지 않음
+			// kmClinicView.setMapPoint(indexobj.getString("mapPoint"));
 			kmClinicView.setBigRegionCode(indexobj.getInt("bigRegionCode"));
 			kmClinicView.setBigRegionName(indexobj.getString("bigRegionName"));
 			kmClinicView.setMiddleRegionCode(indexobj.getInt("middleRegionCode"));
@@ -211,16 +211,21 @@ public class JsonParser {
 			kmClinicView.setUserLikeNum(indexobj.getInt("userLikeNum"));
 			Log.d("kim", kmClinicView.toString());
 			JSONArray JSONindexArray = new JSONArray();
-			JSONindexArray = indexobj.getJSONArray("keywordArray");
+			JSONindexArray = indexobj.getJSONArray("keywordList");
 			List<String> keywordList = new ArrayList();
+			try{
 			for (int idx = 0; idx < JSONindexArray.length(); idx++) {
 				keywordList.add(JSONindexArray.getString(i));
+			}}catch(Exception e) {
+				e.printStackTrace();
 			}
 
 			kmClinicView.setKeywordList(keywordList);
 
 			JSONindexArray = indexobj.getJSONArray("userSimpleInfoList");
 			List<UserSimpleInfo> userSimpleInfoList = new ArrayList();
+			
+			try{
 			for (int idx = 0; idx < JSONindexArray.length(); idx++) {
 				indexobj = JSONindexArray.getJSONObject(i);
 
@@ -231,6 +236,8 @@ public class JsonParser {
 				userSimpleInfo.setPicturePath(indexobj.getString("picturePath"));
 
 				userSimpleInfoList.add(userSimpleInfo);
+			}} catch(Exception e) {
+				e.printStackTrace();
 			}
 			kmClinicView.setUserSimpleInfoList(userSimpleInfoList);
 

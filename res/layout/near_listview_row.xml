@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70sp"
         android:orientation="horizontal"
         android:weightSum="1" >
 
@@ -14,29 +14,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.7"
-            android:orientation="vertical"
-            android:weightSum="3" >
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/near_list_name"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textColor="#000000"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:textColor="#000000"/>
 
             <TextView
                 android:id="@+id/near_list_location"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textColor="#818181"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:textColor="#818181"/>
 
             <TextView
                 android:id="@+id/near_list_like"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textColor="#A3A0ED"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:textColor="#A3A0ED" />
         </LinearLayout>
 
         <ImageView

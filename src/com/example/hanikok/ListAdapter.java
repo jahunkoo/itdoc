@@ -39,13 +39,13 @@ public class ListAdapter extends BaseAdapter {
 			
 			String local = kmClinicView.getBigRegionName() + kmClinicView.getMiddleRegionName() + kmClinicView.getRemainRegion();
 			
-			items.add(new Item(kmClinicView.getName(), local, kmClinicView.getFollowNum(), kmClinicView.getPicturePath()));
+			items.add(new Item(kmClinicView.getName(), local, String.valueOf(kmClinicView.getFollowNum()), kmClinicView.getPicturePath()));
 		}
 		
 		
 	}
 
-	public void additem(String name, String location, int like, String picturePath) {
+	public void additem(String name, String location, String like, String picturePath) {
 		items.add(new Item(name, location, like, picturePath));
 	}
 
@@ -87,8 +87,6 @@ public class ListAdapter extends BaseAdapter {
 		txt2.setText(item.local);
 		txt3.setText(item.like);
 
-		Log.d("kim","ListAdapter(86) PicturePath is " + item.picturePath);
-		Log.d("kim","ListAdapter(87) img1 is " + img1);
 		try{
 		imageLoader.DisplayImage(item.picturePath, img1);
 		}catch(Exception e){
@@ -101,10 +99,10 @@ public class ListAdapter extends BaseAdapter {
 	private class Item {
 		final String name;
 		final String local;
-		final int like;
+		final String like;
 		final String picturePath;
 
-		Item(String name, String local, int like, String picturePath) {
+		Item(String name, String local, String like, String picturePath) {
 			this.name = name;
 			this.local = local;
 			this.like = like;

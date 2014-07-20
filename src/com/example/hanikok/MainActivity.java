@@ -36,7 +36,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener, android.widget.AbsListView.OnScrollListener {
+public class MainActivity extends Activity implements OnClickListener, android.widget.AbsListView.OnScrollListener,OnItemClickListener {
 
 	// //
 	String KEY_TEXTPSS = "TEXTPSS";
@@ -653,5 +653,11 @@ public class MainActivity extends Activity implements OnClickListener, android.w
 			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test11.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test12.png"
 
 	};
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		
+		
+	}
 
 }
