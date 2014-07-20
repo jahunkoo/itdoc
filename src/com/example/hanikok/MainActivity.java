@@ -36,8 +36,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener,
-		android.widget.AbsListView.OnScrollListener {
+public class MainActivity extends Activity implements OnClickListener, android.widget.AbsListView.OnScrollListener {
 
 	// //
 	String KEY_TEXTPSS = "TEXTPSS";
@@ -45,11 +44,9 @@ public class MainActivity extends Activity implements OnClickListener,
 
 	ListView dialog_ListView;
 
-	String[] listContent = { "January", "February", "March", "April", "May",
-			"June", "July", "August", "September", "October", "November",
-			"December" };
+	String[] listContent = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	// ////
-	
+
 	private short currentTab = 0; // 현재 탭상태 받는 것
 	private boolean isPressed = false; // 두번 누르면 종료 되기 위한 조건
 	Handler mHandler = null;
@@ -171,7 +168,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		// --------------------------------------------------------//
 
 		// 근처 리스트 뷰 등록
-		listAdapter = new ListAdapter(getApplicationContext(), mStrings);
+		listAdapter = new ListAdapter(this);
 		addItems(12);
 
 		mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -208,28 +205,18 @@ public class MainActivity extends Activity implements OnClickListener,
 		public MyAdapter(Context context) {
 			// TODO Auto-generated constructor stub
 			inflator = LayoutInflater.from(context);
-			items.add(new Item("생명마루 한의원", "서울 강남구", "Like : 87",
-					R.drawable.image_1));
+			items.add(new Item("생명마루 한의원", "서울 강남구", "Like : 87", R.drawable.image_1));
 			items.add(new Item("편강 한의원", "서울 중구", "Like:77", R.drawable.image_2));
-			items.add(new Item("특별한별 한의원", "서울 성동구", "Like : 67",
-					R.drawable.image_3));
-			items.add(new Item("맑은숲 한의원", "서울 강남구", "Like:56",
-					R.drawable.image_4));
-			items.add(new Item("삼성 한의원", "서울 노원구", "Like:43",
-					R.drawable.image_5));
-			items.add(new Item("고운누리 한의원", "서울 강서구", "Like:41",
-					R.drawable.image_6));
-			items.add(new Item("풀입 한의원", "서울 강남구", "Like:31",
-					R.drawable.image_7));
-			items.add(new Item("경희 한의원", "서울 성북구", "Like:21",
-					R.drawable.image_8));
+			items.add(new Item("특별한별 한의원", "서울 성동구", "Like : 67", R.drawable.image_3));
+			items.add(new Item("맑은숲 한의원", "서울 강남구", "Like:56", R.drawable.image_4));
+			items.add(new Item("삼성 한의원", "서울 노원구", "Like:43", R.drawable.image_5));
+			items.add(new Item("고운누리 한의원", "서울 강서구", "Like:41", R.drawable.image_6));
+			items.add(new Item("풀입 한의원", "서울 강남구", "Like:31", R.drawable.image_7));
+			items.add(new Item("경희 한의원", "서울 성북구", "Like:21", R.drawable.image_8));
 			items.add(new Item("한림 병원", "서울 중구", "Like:20", R.drawable.image_9));
-			items.add(new Item("버드나무 한의원", "서울 강남구", "Like:17",
-					R.drawable.image_10));
-			items.add(new Item("자연과 한의원", "서울 용산구", "Like:11",
-					R.drawable.image_11));
-			items.add(new Item("선재 한의원", "서울 동대문구", "Like:5",
-					R.drawable.image_12));
+			items.add(new Item("버드나무 한의원", "서울 강남구", "Like:17", R.drawable.image_10));
+			items.add(new Item("자연과 한의원", "서울 용산구", "Like:11", R.drawable.image_11));
+			items.add(new Item("선재 한의원", "서울 동대문구", "Like:5", R.drawable.image_12));
 
 		}
 
@@ -335,9 +322,9 @@ public class MainActivity extends Activity implements OnClickListener,
 			// searchView_down.setVisibility(View.GONE); // 탭뷰 숨김
 			// searchView_up.setVisibility(View.VISIBLE); // 검색창을 보여줌
 			// searchView_up.startAnimation(aniShow); // 애니메이션 효과
-		//	Intent intent = new Intent(getBaseContext(),
-			//		LocalListActivity.class);
-			//startActivity(intent);
+			// Intent intent = new Intent(getBaseContext(),
+			// LocalListActivity.class);
+			// startActivity(intent);
 
 			// searchView_down.setVisibility(View.GONE);
 
@@ -363,72 +350,68 @@ public class MainActivity extends Activity implements OnClickListener,
 	}
 
 	@Override
-	 protected Dialog onCreateDialog(int id) {
+	protected Dialog onCreateDialog(int id) {
 
-	 Dialog dialog = null;
-	 
-	 switch(id) {
-	 case CUSTOM_DIALOG_ID:
-	 dialog = new Dialog(MainActivity.this);
-	 dialog.setContentView(R.layout.local_list);
-	 dialog.setTitle("검색 지역");
-	 dialog.setCancelable(true);
-	 dialog.setCanceledOnTouchOutside(true);
-	 
-	 
-	 dialog.setOnCancelListener(new OnCancelListener(){
+		Dialog dialog = null;
 
-	 @Override
-	 public void onCancel(DialogInterface dialog) {
-	 // TODO Auto-generated method stub
-	 }});
-	 
-	 dialog.setOnDismissListener(new OnDismissListener(){
+		switch (id) {
+		case CUSTOM_DIALOG_ID:
+			dialog = new Dialog(MainActivity.this);
+			dialog.setContentView(R.layout.local_list);
+			dialog.setTitle("검색 지역");
+			dialog.setCancelable(true);
+			dialog.setCanceledOnTouchOutside(true);
 
-	 @Override
-	 public void onDismiss(DialogInterface dialog) {
-	 // TODO Auto-generated method stub
-	 }});
+			dialog.setOnCancelListener(new OnCancelListener() {
 
-	 //Prepare ListView in dialog
-	 dialog_ListView = (ListView)dialog.findViewById(R.id.local_dialoglist);
-	 ArrayAdapter<String> adapter 
-	 = new ArrayAdapter<String>(this, 
-	 android.R.layout.simple_list_item_1, listContent);
-	 dialog_ListView.setAdapter(adapter);
-	 dialog_ListView.setOnItemClickListener(new OnItemClickListener(){
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					// TODO Auto-generated method stub
+				}
+			});
 
-	 @Override
-	 public void onItemClick(AdapterView<?> parent, View view,
-	 int position, long id) {
-	 // TODO Auto-generated method stub
-	 Toast.makeText(MainActivity.this, 
-	 parent.getItemAtPosition(position).toString() + " clicked", 
-	 Toast.LENGTH_LONG).show();
-	 dismissDialog(CUSTOM_DIALOG_ID);
-	 }});
-	 
-	 break;
-	 }
+			dialog.setOnDismissListener(new OnDismissListener() {
 
-	 return dialog;
-	 }
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					// TODO Auto-generated method stub
+				}
+			});
 
-	 @Override
-	 protected void onPrepareDialog(int id, Dialog dialog, Bundle bundle) {
-	 // TODO Auto-generated method stub
-	 super.onPrepareDialog(id, dialog, bundle);
+			// Prepare ListView in dialog
+			dialog_ListView = (ListView) dialog.findViewById(R.id.local_dialoglist);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listContent);
+			dialog_ListView.setAdapter(adapter);
+			dialog_ListView.setOnItemClickListener(new OnItemClickListener() {
 
-	 switch(id) {
-	 case CUSTOM_DIALOG_ID:
-	 //
-	 break;
-	 }
-	 
-	 }
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					// TODO Auto-generated method stub
+					Toast.makeText(MainActivity.this, parent.getItemAtPosition(position).toString() + " clicked", Toast.LENGTH_LONG).show();
+					dismissDialog(CUSTOM_DIALOG_ID);
+				}
+			});
 
-	
-//
+			break;
+		}
+
+		return dialog;
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog, Bundle bundle) {
+		// TODO Auto-generated method stub
+		super.onPrepareDialog(id, dialog, bundle);
+
+		switch (id) {
+		case CUSTOM_DIALOG_ID:
+			//
+			break;
+		}
+
+	}
+
+	//
 	@Override
 	public void onBackPressed() {
 
@@ -438,8 +421,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		} else {
 
 			if (!isPressed) {
-				Toast.makeText(MainActivity.this, "'뒤로'버튼을 한번 더 누르시면 종료됩니다.",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
 				isPressed = true;
 				mHandler.sendEmptyMessageDelayed(0, 2000);
 			} else {
@@ -579,8 +561,7 @@ public class MainActivity extends Activity implements OnClickListener,
 				if ("Tab5".equals(tabId)) { // 설정을 누를때 새로운 액티비티를 연다
 					tabHost.setCurrentTab(currentTab); // 설정을 누르기 전의 탭의 상태로 변환
 														// 한다.
-					Intent intent = new Intent(MainActivity.this,
-							profileActivity.class);
+					Intent intent = new Intent(MainActivity.this, profileActivity.class);
 					startActivity(intent);
 				}
 			}
@@ -629,8 +610,7 @@ public class MainActivity extends Activity implements OnClickListener,
 	}
 
 	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		int count = totalItemCount - visibleItemCount;
 
 		/*
@@ -640,8 +620,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		 * count); Log.d("kim", "mLockListView is " + mLockListView);
 		 */
 
-		if (firstVisibleItem >= count && totalItemCount != 0
-				&& mLockListView == false) {
+		if (firstVisibleItem >= count && totalItemCount != 0 && mLockListView == false) {
 			addItems(12);
 		}
 
@@ -654,26 +633,8 @@ public class MainActivity extends Activity implements OnClickListener,
 		Runnable run = new Runnable() {
 			@Override
 			public void run() {
-				listAdapter.additem("additem", "additem", "additem",
-						mStrings[11]);
-				listAdapter.additem("편강 한의원", "서울 중구", "Like:77", mStrings[10]);
-				listAdapter.additem("특별한별 한의원", "서울 성동구", "Like : 67",
-						mStrings[9]);
-				listAdapter
-						.additem("맑은숲 한의원", "서울 강남구", "Like:56", mStrings[8]);
-				listAdapter.additem("삼성 한의원", "서울 노원구", "Like:43", mStrings[7]);
-				listAdapter.additem("고운누리 한의원", "서울 강서구", "Like:41",
-						mStrings[6]);
-				listAdapter.additem("풀입 한의원", "서울 강남구", "Like:31", mStrings[5]);
-				listAdapter.additem("경희 한의원", "서울 성북구", "Like:21", mStrings[4]);
-				listAdapter.additem("한림 병원", "서울 중구", "Like:20", mStrings[3]);
-				listAdapter.additem("버드나무 한의원", "서울 강남구", "Like:17",
-						mStrings[2]);
-				listAdapter
-						.additem("자연과 한의원", "서울 용산구", "Like:11", mStrings[1]);
-				listAdapter.additem("선재 한의원", "서울 동대문구", "Like:5", mStrings[0]);
 
-				listAdapter.notifyDataSetChanged();
+				
 				mLockListView = false;
 			}
 
@@ -684,19 +645,12 @@ public class MainActivity extends Activity implements OnClickListener,
 
 	}
 
-	private String[] mStrings = {
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test1.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test2.jpg",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test3.jpg",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test4.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test5.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test6.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test7.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test8.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test9.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test10.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test11.png",
-			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test12.png"
+	private String[] mStrings = { "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test1.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test2.jpg",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test3.jpg", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test4.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test5.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test6.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test7.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test8.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test9.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test10.png",
+			"http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test11.png", "http://yss159.cafe24.com:8080/ItDocImgServer/getPicture?pictureName=test12.png"
 
 	};
 

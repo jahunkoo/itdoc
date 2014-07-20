@@ -29,6 +29,7 @@ public class ItDocConstants {
 	public static final String METHOD_URL_GET_GRADE_LIST = "getGradeList";
 	public static final String METHOD_URL_GET_WEEK_LIST = "getWeekList";
 	public static final String METHOD_URL_GET_TIME_LIST = "getTimeList";
+	public static final String METHOD_URL_GET_ALLKMCLINIC_LIST = "getAllKmClinic";
 	public static final String METHOD_URL_REGISTER = "register";
 	public static final String METHOD_URL_LOGIN = "login";
 }

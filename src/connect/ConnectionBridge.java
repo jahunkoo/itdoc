@@ -14,6 +14,7 @@ import android.content.Context;
 import android.util.Log;
 import dto.BigRegion;
 import dto.Grade;
+import dto.KmClinicView;
 import dto.MiddleRegion;
 import dto.Time;
 import dto.Week;
@@ -37,18 +38,15 @@ public class ConnectionBridge {
 	 * @param context
 	 *            데이터 통신이 이루어지는 동안 로딩화면을 띄우기 위해 필요
 	 */
-	public ArrayList<BigRegion> getBigRegionList(String methodUrl,
-			Context context) {
+	public ArrayList<BigRegion> getBigRegionList(String methodUrl, Context context) {
 		ArrayList<BigRegion> bigRegionList = null;
-		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME,
-				methodUrl);
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		try {
 			connection.setMethod(HttpConnectionModule.GET);
 			connection.downloadTask.execute(targetUrl);
 			String result = connection.downloadTask.get();
-			bigRegionList = (ArrayList<BigRegion>) new JsonParser(methodUrl)
-					.parse(result);
+			bigRegionList = (ArrayList<BigRegion>) new JsonParser(methodUrl).parse(result);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -66,18 +64,15 @@ public class ConnectionBridge {
 		return bigRegionList;
 	}
 
-	public ArrayList<MiddleRegion> getMiddleRegionList(String methodUrl,
-			Context context) {
+	public ArrayList<MiddleRegion> getMiddleRegionList(String methodUrl, Context context) {
 		ArrayList<MiddleRegion> middleRegionList = null;
-		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME,
-				methodUrl);
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		try {
 			connection.setMethod(HttpConnectionModule.GET);
 			connection.downloadTask.execute(targetUrl);
 			String result = connection.downloadTask.get();
-			middleRegionList = (ArrayList<MiddleRegion>) new JsonParser(
-					methodUrl).parse(result);
+			middleRegionList = (ArrayList<MiddleRegion>) new JsonParser(methodUrl).parse(result);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -95,18 +90,15 @@ public class ConnectionBridge {
 		return middleRegionList;
 	}
 
-	public ArrayList<Grade> getGradeList(String methodUrl,
-			Context context) {
+	public ArrayList<Grade> getGradeList(String methodUrl, Context context) {
 		ArrayList<Grade> gradeList = null;
-		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME,
-				methodUrl);
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		try {
 			connection.setMethod(HttpConnectionModule.GET);
 			connection.downloadTask.execute(targetUrl);
 			String result = connection.downloadTask.get();
-			gradeList = (ArrayList<Grade>) new JsonParser(
-					methodUrl).parse(result);
+			gradeList = (ArrayList<Grade>) new JsonParser(methodUrl).parse(result);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -123,20 +115,16 @@ public class ConnectionBridge {
 
 		return gradeList;
 	}
-	
 
-	public ArrayList<Week> getWeekList(String methodUrl,
-			Context context) {
+	public ArrayList<Week> getWeekList(String methodUrl, Context context) {
 		ArrayList<Week> weekList = null;
-		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME,
-				methodUrl);
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		try {
 			connection.setMethod(HttpConnectionModule.GET);
 			connection.downloadTask.execute(targetUrl);
 			String result = connection.downloadTask.get();
-			weekList = (ArrayList<Week>) new JsonParser(
-					methodUrl).parse(result);
+			weekList = (ArrayList<Week>) new JsonParser(methodUrl).parse(result);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -153,20 +141,16 @@ public class ConnectionBridge {
 
 		return weekList;
 	}
-	
 
-	public ArrayList<Time> getTimeList(String methodUrl,
-			Context context) {
+	public ArrayList<Time> getTimeList(String methodUrl, Context context) {
 		ArrayList<Time> timeList = null;
-		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME,
-				methodUrl);
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		try {
 			connection.setMethod(HttpConnectionModule.GET);
 			connection.downloadTask.execute(targetUrl);
 			String result = connection.downloadTask.get();
-			timeList = (ArrayList<Time>) new JsonParser(
-					methodUrl).parse(result);
+			timeList = (ArrayList<Time>) new JsonParser(methodUrl).parse(result);
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -184,13 +168,40 @@ public class ConnectionBridge {
 		return timeList;
 	}
 
+	public ArrayList<KmClinicView> getKmClinicViewList(String methodUrl, Context context) {
+		ArrayList<KmClinicView> KmClinicView = null;
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
+		HttpConnectionModule connection = new HttpConnectionModule(context);
+		try {
+			connection.setMethod(HttpConnectionModule.GET);
+			connection.downloadTask.execute(targetUrl);
+			String result = connection.downloadTask.get();
+			KmClinicView = (ArrayList<KmClinicView>) new JsonParser(methodUrl).parse(result);
+			
+			/*for (int i = 0; i < KmClinicView.size(); i++) {
+				Log.d("kim", KmClinicView.get(i).toString());
+			}*/
+			
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			Log.d("kim","kim");
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			
+		}
 
-
+		return KmClinicView;
+	}
 
 	public String register(String methodUrl, Properties props, Context context) {
 		String result = null;
-		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME,
-				methodUrl);
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
 
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		try {
@@ -219,8 +230,7 @@ public class ConnectionBridge {
 
 	public String insertImage(String methodUrl, File uploadFile, Context context) {
 		String result = null;
-		String targetUrl = getFullUrl(IMG_SERVER_ADDRESS, IMG_PROJECT_NAME,
-				methodUrl);
+		String targetUrl = getFullUrl(IMG_SERVER_ADDRESS, IMG_PROJECT_NAME, methodUrl);
 
 		// 점을 언더바로 교체, 반드시 png형식으로 저장
 		String fileName = "koo10682@gmail_com_123.png";
@@ -232,7 +242,6 @@ public class ConnectionBridge {
 
 		try {
 			String data = connection.downloadTask.get();
-			Log.d("koo", "insertImage result:" + data);
 			// {"result","success"}
 			// result = (String) new JsonParser(methodUrl).parse(data);
 		} catch (InterruptedException e) {
@@ -246,8 +255,7 @@ public class ConnectionBridge {
 		return result;
 	}
 
-	private String getFullUrl(String serverUrl, String projectUrl,
-			String methodUrl) {
+	private String getFullUrl(String serverUrl, String projectUrl, String methodUrl) {
 		return serverUrl + "/" + projectUrl + "/" + methodUrl;
 	}
 }

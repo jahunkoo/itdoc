@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,8 +10,11 @@ import org.json.JSONObject;
 import android.util.Log;
 import dto.BigRegion;
 import dto.Grade;
+import dto.KmClinicDetailView;
+import dto.KmClinicView;
 import dto.MiddleRegion;
 import dto.Time;
+import dto.UserSimpleInfo;
 import dto.Week;
 
 public class JsonParser {
@@ -44,6 +48,8 @@ public class JsonParser {
 			obj = parseWeekList(data);
 		} else if (methodUrl.equals(ItDocConstants.METHOD_URL_GET_TIME_LIST)) {
 			obj = parseTimeList(data);
+		} else if (methodUrl.equals(ItDocConstants.METHOD_URL_GET_ALLKMCLINIC_LIST)) {
+			obj = parseKmClinicViewList(data);
 		}
 		return obj;
 	}
@@ -55,8 +61,7 @@ public class JsonParser {
 	}
 
 	// 메서드 네이밍 : parse+클래스명+자료구조
-	private ArrayList<BigRegion> parseBigRegionList(String data)
-			throws JSONException {
+	private ArrayList<BigRegion> parseBigRegionList(String data) throws JSONException {
 		ArrayList<BigRegion> bigRegionList = new ArrayList<BigRegion>();
 
 		JSONObject jsonObj = new JSONObject(data);
@@ -67,15 +72,13 @@ public class JsonParser {
 			bigRegion.setRegionCode(indexObj.getInt("regionCode"));
 			bigRegion.setRegionName(indexObj.getString("regionName"));
 			bigRegionList.add(bigRegion);
-			Log.d("koo", bigRegion.toString());
 		}
 
 		return bigRegionList;
 	}
 
 	// 메서드 네이밍 : parse+클래스명+자료구조
-	private ArrayList<MiddleRegion> parseMiddleRegionList(String data)
-			throws JSONException {
+	private ArrayList<MiddleRegion> parseMiddleRegionList(String data) throws JSONException {
 		ArrayList<MiddleRegion> middleRegionList = new ArrayList<MiddleRegion>();
 
 		JSONObject jsonObj = new JSONObject(data);
@@ -87,7 +90,6 @@ public class JsonParser {
 			middleRegion.setRegionName(indexObj.getString("regionName"));
 			middleRegion.setBigRegionCode(indexObj.getInt("bigRegionCode"));
 			middleRegionList.add(middleRegion);
-			Log.d("koo", middleRegion.toString());
 		}
 
 		return middleRegionList;
@@ -105,7 +107,6 @@ public class JsonParser {
 			grade.setGradeCode(indexObj.getInt("gradeCode"));
 			grade.setGradeName(indexObj.getString("gradeName"));
 			gradeList.add(grade);
-			Log.d("koo", grade.toString());
 		}
 
 		return gradeList;
@@ -122,7 +123,6 @@ public class JsonParser {
 			week.setWeekCode(indexobj.getInt("weekCode"));
 			week.setWeekNameKor(indexobj.getString("weekNameKor"));
 			weekList.add(week);
-			Log.d("koo", week.toString());
 		}
 		return weekList;
 	}
@@ -138,9 +138,106 @@ public class JsonParser {
 			time.setTimeCode(indexobj.getInt("TimeCode"));
 			time.setTimeHalf(indexobj.getString("TimeHalf"));
 			timeList.add(time);
-			Log.d("koo", time.toString());
 		}
 		return timeList;
+	}
+
+	// 메서드 네이밍 : parse+클래스명+자료구조
+	private ArrayList<KmClinicDetailView> parseKmClinicDetailViewList(String data) throws JSONException {
+		ArrayList<KmClinicDetailView> KmClinicDetailViewList = new ArrayList<KmClinicDetailView>();
+
+		JSONObject jsonObj = new JSONObject(data);
+		JSONArray jsonArray = jsonObj.getJSONArray("KmClinicDetailView");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject indexobj = jsonArray.getJSONObject(i);
+			KmClinicDetailView kmClinicDetailView = new KmClinicDetailView();
+			kmClinicDetailView.setId(indexobj.getInt("id"));
+			kmClinicDetailView.setName(indexobj.getString("name"));
+
+			// keywordArray 받아와야 함
+			// picturePathArray 받아와야 함
+			// userSimpleInfoArray 받아와야 함
+
+			kmClinicDetailView.setDetails(indexobj.getString("detail"));
+			kmClinicDetailView.setLinePhone(indexobj.getString("linePhone"));
+			kmClinicDetailView.setBigRegionCode(indexobj.getString("bigRegionCode"));
+			kmClinicDetailView.setBigRegionName(indexobj.getString("bigRigionName"));
+			kmClinicDetailView.setMiddleRegionCode(indexobj.getString("middleRegionCode"));
+			kmClinicDetailView.setMiddleRegionName(indexobj.getString("middleRegionName"));
+			kmClinicDetailView.setRemainRegionName(indexobj.getString("remainRegionNmae"));
+			kmClinicDetailView.setMapPoint(indexobj.getString("mapPoint"));
+			kmClinicDetailView.setHomepage(indexobj.getString("homePage"));
+			kmClinicDetailView.setType(indexobj.getInt("type"));
+			kmClinicDetailView.setFollowNum(indexobj.getInt("followNum"));
+
+			// reviewArray 받아 와야 함.
+
+			// keywordArray 를 받기 위한 형태
+
+			JSONArray JSONkeywordArray = new JSONArray();
+			JSONkeywordArray = indexobj.getJSONArray("keywordArray");
+			String[] keyArraytemp;
+			for (int idx = 0; idx < JSONkeywordArray.length(); idx++) {
+				// keyArraytemp[i] = JSONkeywordArray.getString(i);
+			}
+
+			KmClinicDetailViewList.add(kmClinicDetailView);
+		}
+		return KmClinicDetailViewList;
+	}
+
+	private ArrayList<KmClinicView> parseKmClinicViewList(String data) throws JSONException {
+		ArrayList<KmClinicView> kmClinicViewList = new ArrayList<KmClinicView>();
+
+		JSONObject jsonObj = new JSONObject(data);
+		JSONArray jsonArray = jsonObj.getJSONArray("KmClinicViewList");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			KmClinicView kmClinicView = new KmClinicView();
+			JSONObject indexobj = jsonArray.getJSONObject(i);
+
+			kmClinicView.setId(indexobj.getInt("id"));
+			Log.d("kim", kmClinicView.toString());
+			kmClinicView.setName(indexobj.getString("name"));
+			kmClinicView.setMapPoint(indexobj.getString("mapPoint"));
+			kmClinicView.setBigRegionCode(indexobj.getInt("bigRegionCode"));
+			kmClinicView.setBigRegionName(indexobj.getString("bigRegionName"));
+			kmClinicView.setMiddleRegionCode(indexobj.getInt("middleRegionCode"));
+			kmClinicView.setMiddleRegionName(indexobj.getString("middleRegionName"));
+			kmClinicView.setRemainRegion(indexobj.getString("remainRegion"));
+			kmClinicView.setFollowNum(indexobj.getInt("followNum"));
+			kmClinicView.setRatingNum(indexobj.getInt("ratingNum"));
+			kmClinicView.setPicturePath(indexobj.getString("picturePath"));
+			kmClinicView.setUserLikeNum(indexobj.getInt("userLikeNum"));
+			Log.d("kim", kmClinicView.toString());
+			JSONArray JSONindexArray = new JSONArray();
+			JSONindexArray = indexobj.getJSONArray("keywordArray");
+			List<String> keywordList = new ArrayList();
+			for (int idx = 0; idx < JSONindexArray.length(); idx++) {
+				keywordList.add(JSONindexArray.getString(i));
+			}
+
+			kmClinicView.setKeywordList(keywordList);
+
+			JSONindexArray = indexobj.getJSONArray("userSimpleInfoList");
+			List<UserSimpleInfo> userSimpleInfoList = new ArrayList();
+			for (int idx = 0; idx < JSONindexArray.length(); idx++) {
+				indexobj = JSONindexArray.getJSONObject(i);
+
+				UserSimpleInfo userSimpleInfo = new UserSimpleInfo();
+
+				userSimpleInfo.setEmail(indexobj.getString("email"));
+				userSimpleInfo.setName(indexobj.getString("name"));
+				userSimpleInfo.setPicturePath(indexobj.getString("picturePath"));
+
+				userSimpleInfoList.add(userSimpleInfo);
+			}
+			kmClinicView.setUserSimpleInfoList(userSimpleInfoList);
+
+			kmClinicViewList.add(kmClinicView);
+		}
+
+		return kmClinicViewList;
 	}
 
 }
