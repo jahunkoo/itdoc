@@ -88,11 +88,16 @@ public class IntroActivity extends Activity // ��Ʈ�� �κ� ��Ƽ�
 	
 	Runnable bigRegionRunnable = new Runnable() {
 		public void run() {
-			ArrayList<BigRegion> bigRegionList = new ConnectionBridge()
+			bigReionList = new ConnectionBridge()
+			.getBigRegionList(
+					ItDocConstants.METHOD_URL_GET_BIG_REGION_LIST,
+					IntroActivity.this);
+	Log.d("Big","Success");
+			/*ArrayList<BigRegion> bigRegionList = new ConnectionBridge()
 					.getBigRegionList(
 							ItDocConstants.METHOD_URL_GET_BIG_REGION_LIST,
 							IntroActivity.this);
-			Log.d("Big","Success");
+			Log.d("Big","Success");*/
 			//String tmpStr = new String();
 			//for (BigRegion bigRegion : bigRegionList) {
 			//	tmpStr += bigRegion.toString();

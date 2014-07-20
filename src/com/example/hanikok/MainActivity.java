@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +20,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -36,16 +31,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener, android.widget.AbsListView.OnScrollListener,OnItemClickListener {
-
-	// //
-	String KEY_TEXTPSS = "TEXTPSS";
-	static final int CUSTOM_DIALOG_ID = 0;
-
-	ListView dialog_ListView;
-
-	String[] listContent = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-	// ////
+public class MainActivity extends FragmentActivity implements OnClickListener, android.widget.AbsListView.OnScrollListener,OnItemClickListener {
 
 	private short currentTab = 0; // 현재 탭상태 받는 것
 	private boolean isPressed = false; // 두번 누르면 종료 되기 위한 조건
@@ -332,10 +318,8 @@ public class MainActivity extends Activity implements OnClickListener, android.w
 
 		case R.id.SearchView_btn2:
 			// changeImage();
-			// Intent intent = new Intent(getBaseContext(),
-			// LocalListActivity.class);
-			// startActivity(intent);
-			showDialog(CUSTOM_DIALOG_ID);
+			LocationDialog locationDialog = LocationDialog.newInstance();
+			locationDialog.show(getSupportFragmentManager(), "location");
 
 			break;
 
@@ -349,69 +333,7 @@ public class MainActivity extends Activity implements OnClickListener, android.w
 		}
 	}
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
-
-		Dialog dialog = null;
-
-		switch (id) {
-		case CUSTOM_DIALOG_ID:
-			dialog = new Dialog(MainActivity.this);
-			dialog.setContentView(R.layout.local_list);
-			dialog.setTitle("검색 지역");
-			dialog.setCancelable(true);
-			dialog.setCanceledOnTouchOutside(true);
-
-			dialog.setOnCancelListener(new OnCancelListener() {
-
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					// TODO Auto-generated method stub
-				}
-			});
-
-			dialog.setOnDismissListener(new OnDismissListener() {
-
-				@Override
-				public void onDismiss(DialogInterface dialog) {
-					// TODO Auto-generated method stub
-				}
-			});
-
-			// Prepare ListView in dialog
-			dialog_ListView = (ListView) dialog.findViewById(R.id.local_dialoglist);
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listContent);
-			dialog_ListView.setAdapter(adapter);
-			dialog_ListView.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					// TODO Auto-generated method stub
-					Toast.makeText(MainActivity.this, parent.getItemAtPosition(position).toString() + " clicked", Toast.LENGTH_LONG).show();
-					dismissDialog(CUSTOM_DIALOG_ID);
-				}
-			});
-
-			break;
-		}
-
-		return dialog;
-	}
-
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog, Bundle bundle) {
-		// TODO Auto-generated method stub
-		super.onPrepareDialog(id, dialog, bundle);
-
-		switch (id) {
-		case CUSTOM_DIALOG_ID:
-			//
-			break;
-		}
-
-	}
-
-	//
+	
 	@Override
 	public void onBackPressed() {
 
