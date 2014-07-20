@@ -1,6 +1,7 @@
 package clinicActivity;
 
-import android.R;
+import com.example.hanikok.R;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
