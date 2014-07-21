@@ -164,7 +164,7 @@ public class JsonParser {
 			kmClinicDetailView.setBigRegionName(indexobj.getString("bigRigionName"));
 			kmClinicDetailView.setMiddleRegionCode(indexobj.getString("middleRegionCode"));
 			kmClinicDetailView.setMiddleRegionName(indexobj.getString("middleRegionName"));
-			kmClinicDetailView.setRemainRegionName(indexobj.getString("remainRegionNmae"));
+			//kmClinicDetailView.setRemainRegionName(indexobj.getString("remainRegionNmae"));
 			kmClinicDetailView.setMapPoint(indexobj.getString("mapPoint"));
 			kmClinicDetailView.setHomepage(indexobj.getString("homePage"));
 			kmClinicDetailView.setType(indexobj.getInt("type"));
