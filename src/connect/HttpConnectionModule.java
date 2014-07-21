@@ -50,6 +50,7 @@ public class HttpConnectionModule {
 	private View loadingView;
 	private File uploadFile;
 	private String fileName;
+	private int objectType;
 	
 	public HttpConnectionModule(Context context){ 
 		downloadTask = new DownloadTask();
@@ -88,6 +89,12 @@ public class HttpConnectionModule {
 		this.uploadFile = file;
 		this.fileName = fileName;
 	}
+	
+	public void setImgFile(File file, String fileName, int objectType){
+		this.uploadFile = file;
+		this.fileName = fileName;
+	}
+	
 	/**
 	 * 네트워크가 연결되어 있는 상태인지 확인한다.
 	 * @return isConnected
@@ -247,7 +254,8 @@ public class HttpConnectionModule {
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 
 			//key(name),value 
-			addFormField(dos, "fileName", fileName);
+			if(!(fileName==null) && !fileName.isEmpty()) addFormField(dos, "fileName", fileName);
+			if(objectType!=0) addFormField(dos, "objectType", String.valueOf(objectType));
 			
 			//add File
 			InputStream inputStream = new FileInputStream(uploadFile);

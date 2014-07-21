@@ -2,6 +2,10 @@ package util;
 
 public class ItDocConstants {
 
+	public static final int OBJECT_TYPE_USER = 1;
+	public static final int OBJECT_TYPE_KM_CLINIC = 2;
+	public static final int OBJECT_TYPE_KM_DOCTOR = 3;		
+
 	public static final int CODE_ERROR = -1;
 	public static final int CODE_DEFAULT = 0;
 	public static final int CODE_SUCCESS = 1;
@@ -13,11 +17,30 @@ public class ItDocConstants {
 	public static final String SUCCESS = "success";
 	public static final String EXIST = "exist";
 	public static final String MESSAGE = "message";
-
+	
 	public static final int MEN = 1;
 	public static final int WOMEN = 2;
-
-	// for User
+	
+	
+	//json 
+	public static final String JSON_OBJECT = "JSONObject";
+	public static final String JSON_ARRAY = "JSONArray";
+	
+	
+	//image
+	public static final String IMG_SERVER_HOST = "http://1.234.75.178:8080";
+	public static final String IMG_SERVER_PROJECT = "ItDocImgServer";
+	
+	public static final String IMG_PATH_BASIC = "/home/itDoc/img";
+	public static final String IMG_PATH_USER = "/user";
+	public static final String IMG_PATH_KM_CLINIC = "/kmclinic";
+	public static final String IMG_PATH_KM_DOCTOR = "/kmdoctor";		
+	
+	public static final String IMG_DEFAULT_USER = "userProfileDefault.png";
+	public static final String IMG_DEFAULT_KM_CLINIC = "kmClinicDefault.png";
+	public static final String IMG_DEFAULT_KM_DOCTOR = "kmDoctorDefault.png";
+	
+	//for User 
 	public static final String INPUT_EMPTY = "정보를 입력하세요";
 	public static final String NOT_EMAIL_TYPE = "이메일 형식이 아닙니다.";
 	public static final String PASSWORD_LENGTH_NEED_UP_TO_SIX = "비밀번호는 6자리 이상이어야 합니다.";
