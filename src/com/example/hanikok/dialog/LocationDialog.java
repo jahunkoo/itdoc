@@ -1,6 +1,11 @@
-package com.example.hanikok;
+package com.example.hanikok.dialog;
 
 import java.util.ArrayList;
+
+import com.example.hanikok.IntroActivity;
+import com.example.hanikok.R;
+import com.example.hanikok.R.id;
+import com.example.hanikok.R.layout;
 
 import dto.BigRegion;
 import android.app.Activity;

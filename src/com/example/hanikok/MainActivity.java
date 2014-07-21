@@ -3,6 +3,8 @@ package com.example.hanikok;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.hanikok.dialog.LocationDialog;
+
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
