@@ -3,6 +3,10 @@ package com.example.hanikok;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.hanikok.ListAdapter.SimpleClinicList;
+
+import clinicActivity.ClinicActivity;
+
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -162,7 +167,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 
 		mListView = (ListView) findViewById(R.id.near_Listview);
 		mListView.setAdapter(listAdapter);
-
+		mListView.setOnItemClickListener(this);
 		mListView.setOnScrollListener(this);
 		mLockListView = false;
 
@@ -269,7 +274,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 			this.local = local;
 			this.like = like;
 			this.drawableId = drawableId;
-
 		}
 	}
 
@@ -481,8 +485,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 					actionBar.setTitle("검색");
 				}
 				if ("Tab5".equals(tabId)) { // 설정을 누를때 새로운 액티비티를 연다
-					tabHost.setCurrentTab(currentTab); // 설정을 누르기 전의 탭의 상태로 변환
-														// 한다.
+					tabHost.setCurrentTab(currentTab); // 설정을 누르기 전의 탭의 상태로 변환 한다.
 					Intent intent = new Intent(MainActivity.this, profileActivity.class);
 					startActivity(intent);
 				}
@@ -556,14 +559,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 			@Override
 			public void run() {
 
-				
 				mLockListView = false;
 			}
 
 		};
 
 		Handler handler = new Handler();
-		handler.postDelayed(run, 100);
+		handler.postDelayed(run, 300);
 
 	}
 
@@ -579,6 +581,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		
+		SimpleClinicList simpleClinicList = (SimpleClinicList) parent.getAdapter().getItem(position); 
+		
+		int clinicId = simpleClinicList.getId();
+		
+		Log.d("kim", "MainActivity(592) clinicId = " + clinicId); 
+		
+		Intent intent = new Intent(MainActivity.this,ClinicActivity.class);
+		intent.putExtra("Id",clinicId);
+		startActivity(intent);
 		
 	}
 

@@ -176,7 +176,6 @@ public class IntroActivity extends Activity // ��Ʈ�� �κ� ��Ƽ�
 		RegionThread.start();
 		Intent intent = new Intent(this, MainActivity.class); // Mainȭ������
 																// �̵��Ѵ�.
-		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		startActivity(intent);
 		finish();
 	}

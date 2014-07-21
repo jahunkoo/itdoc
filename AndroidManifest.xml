@@ -33,6 +33,7 @@
         <activity android:name="profileActivity"></activity>
         <activity android:name="profileSetting.profileSettingActivity"></activity>
         <activity android:name="profileSetting.settingHelp"></activity>
+        <activity android:name="clinicActivity.ClinicActivity"></activity>
     </application>
 
 </manifest>
