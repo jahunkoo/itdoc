@@ -27,9 +27,12 @@ public class ItDocConstants {
 	public static final String JSON_ARRAY = "JSONArray";
 	
 	
+	//main
+	public static final String ADDRESS_MAIN_SERVER_HOST = "http://www.itdoc.co.kr";
+	public static final String ADDRESS_MAIN_SERVER_PROJECT= "ItDocServer";
 	//image
-	public static final String IMG_SERVER_HOST = "http://1.234.75.178:8080";
-	public static final String IMG_SERVER_PROJECT = "ItDocImgServer";
+	public static final String ADDRESS_IMG_SERVER_HOST = "http://1.234.75.178:8080";
+	public static final String ADDRESS_IMG_SERVER_PROJECT = "ItDocImgServer";
 	
 	public static final String IMG_PATH_BASIC = "/home/itDoc/img";
 	public static final String IMG_PATH_USER = "/user";

@@ -10,13 +10,22 @@ public class ItDocUtil {
 	private final String REGEX_SHARP = "#";
 	private final String REGEX_DOT = ".";
 	
-	public String createPicturePath(String email){
+	/**
+	 * 이메일과 파일명으로 이미지이름 만들어주는 메서드
+	 * @param email
+	 * @param originalFileName
+	 * @return
+	 */
+	public String createPicturePath(String email, String originalFileName){
+		String[] fileNameArr = originalFileName.split("[.]");
 		String[] tmpArr = email.split(REGEX_AT);
 		String replacedString = null;
 		if(tmpArr[0].contains(REGEX_DOT)){
 			replacedString = replaceDotToSharp(tmpArr[0]);
+		}else {
+			replacedString = tmpArr[0];
 		}
-		String picturePath = replacedString+getTimeStr();
+		String picturePath = replacedString+getTimeStr()+"."+fileNameArr[1];
 		
 		return picturePath;
 	}

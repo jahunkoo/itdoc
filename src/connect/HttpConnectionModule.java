@@ -12,9 +12,13 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.Properties;
+
+import com.example.hanikok.R;
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,8 +30,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
-
-import com.example.hanikok.R;
 
 /**
  * Http통신으로 json형식의 데이터를 주고받을 때 사용되는 클래스
@@ -48,9 +50,14 @@ public class HttpConnectionModule {
 	private Context context;
 	private Activity activity;
 	private View loadingView;
+
 	private File uploadFile;
 	private String fileName;
+	
+	//itDoc을 위한 변수
 	private int objectType;
+	private String email;
+	
 	
 	public HttpConnectionModule(Context context){ 
 		downloadTask = new DownloadTask();
@@ -90,9 +97,19 @@ public class HttpConnectionModule {
 		this.fileName = fileName;
 	}
 	
-	public void setImgFile(File file, String fileName, int objectType){
+	/**
+	 * 
+	 * @param file 			이미지파일(안드로이드에서는 .png)
+	 * @param email			사용자의 이메일계정
+	 * @param filePath		이미지이름
+	 * @param objectType	일반 유저:ItDocConstants.OBJECT_TYPE_USER /한의원:OBJECT_TYPE_KM_CLINIC /한의사:OBJECT_TYPE_KM_DOCTOR
+	 * 	
+	 */
+	public void setProfileImgFile(File file, String email , String filePath, int objectType){
 		this.uploadFile = file;
-		this.fileName = fileName;
+		this.email = email;
+		this.fileName = filePath;
+		this.objectType = objectType;
 	}
 	
 	/**
@@ -110,7 +127,6 @@ public class HttpConnectionModule {
 		    	isConnected = false;
 		    	//display error
 		    	//Toast.makeText(context, "No network connection available.", Toast.LENGTH_SHORT).show();
-		    	Log.d("test","test");
 		    }
 		return isConnected;
 	}
@@ -254,8 +270,10 @@ public class HttpConnectionModule {
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 
 			//key(name),value 
+			//addFormField(dos, "fileName", fileName);
 			if(!(fileName==null) && !fileName.isEmpty()) addFormField(dos, "fileName", fileName);
 			if(objectType!=0) addFormField(dos, "objectType", String.valueOf(objectType));
+			if(!(email==null) && !email.isEmpty()) addFormField(dos, "email", email);
 			
 			//add File
 			InputStream inputStream = new FileInputStream(uploadFile);

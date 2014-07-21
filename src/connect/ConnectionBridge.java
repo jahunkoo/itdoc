@@ -9,8 +9,10 @@ import java.util.concurrent.ExecutionException;
 import org.json.JSONException;
 
 import util.ItDocConstants;
+import util.ItDocUtil;
 import util.JsonParser;
 import android.content.Context;
+import android.location.Address;
 import android.util.Log;
 import dto.BigRegion;
 import dto.Grade;
@@ -227,17 +229,19 @@ public class ConnectionBridge {
 
 		return result;
 	}
-
+	
+	// 이미지 업로드
 	public String insertImage(String methodUrl, File uploadFile, Context context) {
 		String result = null;
-		String targetUrl = getFullUrl(IMG_SERVER_ADDRESS, IMG_PROJECT_NAME, methodUrl);
-
-		// 점을 언더바로 교체, 반드시 png형식으로 저장
-		String fileName = "koo10682@gmail_com_123.png";
-
+		String email = "koo10682@gmail.com";
+		String targetUrl = getFullUrl(ItDocConstants.ADDRESS_IMG_SERVER_HOST, ItDocConstants.ADDRESS_IMG_SERVER_PROJECT, methodUrl);
+		
+		String picturePath = new ItDocUtil().createPicturePath(email, uploadFile.getName());
+		
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		connection.setMethod(HttpConnectionModule.MULTIPART_POST);
-		connection.setFile(uploadFile, fileName);
+		connection.setProfileImgFile(uploadFile, email, picturePath, ItDocConstants.OBJECT_TYPE_USER);
+
 		connection.downloadTask.execute(targetUrl);
 
 		try {
