@@ -1,12 +1,13 @@
 package clinicActivity;
 
-import com.example.hanikok.R;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.hanikok.R;
 
 public class ClinicActivity extends Activity {
 
@@ -33,8 +34,11 @@ public class ClinicActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		clinicId = getIntent().getIntExtra("Id", 1);
 		setContentView(R.layout.clinic);
-
+		
+		Log.d("kim","ClinicActivity(39) clinic ID is " + clinicId);
+		
 		setElements();
 
 	}
