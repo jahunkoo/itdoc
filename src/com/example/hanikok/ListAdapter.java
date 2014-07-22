@@ -20,7 +20,7 @@ import dto.KmClinicView;
 
 public class ListAdapter extends BaseAdapter {
 
-	public List<Item> items = new ArrayList<Item>();
+	public List<SimpleClinicList> simpleClinicList = new ArrayList<SimpleClinicList>();
 	private LayoutInflater inflator;
 	public ImageLoader imageLoader;
 
@@ -39,25 +39,23 @@ public class ListAdapter extends BaseAdapter {
 			
 			String local = kmClinicView.getBigRegionName() + kmClinicView.getMiddleRegionName() + kmClinicView.getRemainRegion();
 			
-			items.add(new Item(kmClinicView.getName(), local, String.valueOf(kmClinicView.getFollowNum()), kmClinicView.getPicturePath()));
+			simpleClinicList.add(new SimpleClinicList(kmClinicView.getName(), local, String.valueOf(kmClinicView.getFollowNum()), kmClinicView.getPicturePath(), kmClinicView.getId()));
 		}
-		
-		
 	}
 
-	public void additem(String name, String location, String like, String picturePath) {
-		items.add(new Item(name, location, like, picturePath));
+	public void additem(String name, String location, String like, String picturePath, int id) {
+		simpleClinicList.add(new SimpleClinicList(name, location, like, picturePath, id));
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return items.size();
+		return simpleClinicList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return items.get(position);
+		return simpleClinicList.get(position);
 	}
 
 	@Override
@@ -81,14 +79,14 @@ public class ListAdapter extends BaseAdapter {
 		txt2 = (TextView) v.findViewById(R.id.near_list_location);
 		txt3 = (TextView) v.findViewById(R.id.near_list_like);
 		img1 = (ImageView) v.findViewById(R.id.near_list_image);
-		Item item = (Item) getItem(position);
+		SimpleClinicList simpleClinicList = (SimpleClinicList) getItem(position);
 
-		txt1.setText(item.name);
-		txt2.setText(item.local);
-		txt3.setText(item.like);
+		txt1.setText(simpleClinicList.name);
+		txt2.setText(simpleClinicList.local);
+		txt3.setText(simpleClinicList.like);
 
 		try{
-		imageLoader.DisplayImage(item.picturePath, img1);
+		imageLoader.DisplayImage(simpleClinicList.picturePath, img1);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -96,24 +94,29 @@ public class ListAdapter extends BaseAdapter {
 		return v;
 	}
 
-	private class Item {
+	public class SimpleClinicList {
 		final String name;
 		final String local;
 		final String like;
 		final String picturePath;
+		final int id;
 
-		Item(String name, String local, String like, String picturePath) {
+		SimpleClinicList(String name, String local, String like, String picturePath, int id) {
 			this.name = name;
 			this.local = local;
 			this.like = like;
 			this.picturePath = picturePath;
-
+			this.id = id;
 		}
+
+		public int getId() {
+			return this.id;
+		}
+		
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return position;
 	}
 

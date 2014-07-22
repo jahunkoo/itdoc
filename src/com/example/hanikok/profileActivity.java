@@ -41,7 +41,7 @@ public class profileActivity extends Activity implements OnClickListener {
 		
 		//회원가입
 		case R.id.join_hani:
-			Intent intent = new Intent(this, UserInsert.class);
+			Intent intent = new Intent(this,UserInsert.class);
 			startActivity(intent);
 			break;
 

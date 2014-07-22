@@ -160,9 +160,9 @@ public final class R {
         public static final int tv_location=0x7f09002d;
         public static final int tv_workTime=0x7f09002f;
         public static final int txt_age=0x7f090023;
-        public static final int txt_email=0x7f09001f;
+        public static final int txt_cell=0x7f090022;
+        public static final int txt_mail=0x7f09001f;
         public static final int txt_name=0x7f090021;
-        public static final int txt_phone=0x7f090022;
         public static final int txt_pwd=0x7f090020;
     }
     public static final class layout {

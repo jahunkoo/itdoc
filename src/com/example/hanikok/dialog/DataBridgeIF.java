@@ -1,5 +1,8 @@
 package com.example.hanikok.dialog;
 
+import android.content.Context;
+import android.view.View;
+
 
 public interface DataBridgeIF {
 
