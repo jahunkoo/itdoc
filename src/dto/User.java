@@ -3,8 +3,8 @@ package dto;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import util.ItDocConstants;
 import exception.UserException;
+import util.ItDocConstants;
 
 public class User {
 	
@@ -17,7 +17,7 @@ public class User {
 	private String password;
 	private String name;
 	private String cellPhone;
-	private int age;
+	private int birthYear;
 	private int gender 	= DEFAULT_NUM;
 	private int flag	= DEFAULT_NUM;
 	
@@ -27,13 +27,13 @@ public class User {
 	}
 
 	public User(String email, String password, String name, String cellPhone,
-			int age, int gender, int flag) {
+			int birthYear, int gender, int flag) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.cellPhone = cellPhone;
-		this.age = age;
+		this.birthYear = birthYear;
 		this.gender = gender;
 		this.flag = flag;
 	}
@@ -81,12 +81,12 @@ public class User {
 		this.cellPhone = cellPhone;
 	}
 
-	public int getAge() {
-		return age;
+	public int getBirthYear() {
+		return birthYear;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthYear(int birthYear) {
+		this.birthYear = birthYear;
 	}
 
 	public int getGender() {
@@ -103,17 +103,18 @@ public class User {
 
 	public void setFlag(int flag) {
 		this.flag = flag;
+	}	
+	
+	   @Override
+	public String toString() {
+		return "User [DEFAULT_NUM=" + DEFAULT_NUM + ", MIN_PASSWORD_NUM="
+				+ MIN_PASSWORD_NUM + ", EMAIL_PATTERN=" + EMAIL_PATTERN
+				+ ", email=" + email + ", password=" + password + ", name="
+				+ name + ", cellPhone=" + cellPhone + ", birthYear="
+				+ birthYear + ", gender=" + gender + ", flag=" + flag + "]";
 	}
 
-	@Override
-	public String toString() {
-		return "User [email=" + email + ", password=" + password + ", name="
-				+ name + ", cellPhone=" + cellPhone + ", age=" + age
-				+ ", gender=" + gender + ", flag=" + flag + "]";
-	}
-	
-	
-	   private boolean isEmailAddress(String email) {
+	private boolean isEmailAddress(String email) {
 	        Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
 	        Matcher emailMatcher = emailPattern.matcher(email);
 

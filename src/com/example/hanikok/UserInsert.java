@@ -72,6 +72,7 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 			if(!getTextInformation()) return;
 			if(isAllInfoInput() == true) {
 				methodUrl = "register";
+				Log.d("koo", prop.toString());
 				message = bridge.register(methodUrl, prop, this);
 				Log.d("test",message);
 			}else{
@@ -112,15 +113,24 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 		}
 		String name = txt_name.getText().toString();
 		if (name.trim().length() != 0) {
-			//prop.put("name", name);
+			prop.put("name", name);
 			isNameInput = true;
 		} else {
 			Toast.makeText(this, Sentence.noNameMessage, Toast.LENGTH_SHORT)
 					.show();
 		}
+		/*
+		 String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String name = request.getParameter("name");
+		String cellPhone = request.getParameter("cellPhone");
+		String birthYear = request.getParameter("birthYear");
+		String gender = request.getParameter("gender");
+		String flag = request.getParameter("flag");
+		 */
 		String cellPhone = txt_phone.getText().toString();
 		if (cellPhone.trim().length() != 0) {
-			//prop.put("cellPhone", cellPhone);
+			prop.put("cellPhone", cellPhone);
 			isCellPhoneInput = true;
 		} else {
 			Toast.makeText(this, Sentence.noPhoneMessage, Toast.LENGTH_SHORT)
@@ -128,7 +138,7 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 		}
 		String birthYear = txt_age.getText().toString();
 		if (birthYear.trim().length() != 0) {
-			//prop.put("birthYear", birthYear);
+			prop.put("birthYear", birthYear);
 			isBirthYearInput = true;
 		} else {
 			Toast.makeText(this, Sentence.noAgeMessage, Toast.LENGTH_SHORT)

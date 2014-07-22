@@ -86,6 +86,7 @@ public class HttpConnectionModule {
 	 */
 	public void setProperties(Properties prop) throws UnsupportedEncodingException{
 		this.parameter = encodeString(prop);
+		
 	}
 	/**
 	 * 서버로 보낼 파일이 있을 경우에 메서드를 호출한다. 
@@ -288,8 +289,7 @@ public class HttpConnectionModule {
 			// Starts the query
 	        conn.connect();
 	        int responseCode = conn.getResponseCode();
-	        Log.d("koo", "getResponseCode:"+responseCode);
-	         is = conn.getInputStream();
+	        is = conn.getInputStream();
 		   
 		} catch (Exception e) {
 			 e.printStackTrace();
