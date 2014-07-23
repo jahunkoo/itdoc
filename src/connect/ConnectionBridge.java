@@ -166,7 +166,7 @@ public class ConnectionBridge {
 		} catch (NullPointerException e) {
 
 		}
-
+		
 		return timeList;
 	}
 
@@ -246,7 +246,7 @@ public class ConnectionBridge {
 		connection.setProfileImgFile(uploadFile, email, picturePath, ItDocConstants.OBJECT_TYPE_USER);
 
 		connection.downloadTask.execute(targetUrl);
-
+		
 		try {
 			String data = connection.downloadTask.get();
 			// {"result","success"}
