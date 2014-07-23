@@ -4,5 +4,6 @@
     <string name="app_name">itdoc</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_user_insert">UserInsert</string>
+    <string name="title_activity_hani_login">HaniLogin</string>
 
 </resources>

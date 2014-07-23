@@ -1,5 +1,7 @@
 package com.example.hanikok;
 
+import com.example.util.Sentence;
+
 import profileSetting.profileSettingActivity;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class profileActivity extends Activity implements OnClickListener {
 
@@ -21,8 +24,14 @@ public class profileActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_activity);
+		
+		///회원가입, 로그인, 로그아웃 버튼
 		Button hani_join_btn = (Button)findViewById(R.id.join_hani);
 		hani_join_btn.setOnClickListener(this);
+		Button hani_login_btn = (Button)findViewById(R.id.login_hani);
+		hani_login_btn.setOnClickListener(this);
+		Button hani_logout_btn = (Button)findViewById(R.id.logout_hani);
+		hani_logout_btn.setOnClickListener(this);
 		
 		setElements();
 	}
@@ -43,6 +52,18 @@ public class profileActivity extends Activity implements OnClickListener {
 		case R.id.join_hani:
 			Intent intent = new Intent(this,UserInsert.class);
 			startActivity(intent);
+			break;
+
+		case R.id.login_hani:
+			Intent intent_login = new Intent(this,HaniLogin.class);
+			startActivity(intent_login);
+			//Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT)
+			//.show();
+			break;
+			
+		case R.id.logout_hani:
+			Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT)
+			.show();
 			break;
 
 		}

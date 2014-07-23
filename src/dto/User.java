@@ -114,7 +114,7 @@ public class User {
 				+ birthYear + ", gender=" + gender + ", flag=" + flag + "]";
 	}
 
-	private boolean isEmailAddress(String email) {
+	public boolean isEmailAddress(String email) {
 	        Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
 	        Matcher emailMatcher = emailPattern.matcher(email);
 

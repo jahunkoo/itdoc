@@ -2,7 +2,9 @@ package com.example.hanikok;
 
 import java.util.Properties;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,9 +18,11 @@ import com.example.hanikok.dialog.DataBridgeIF;
 import com.example.util.Sentence;
 
 import connect.ConnectionBridge;
+import dto.User;
 
 public class UserInsert extends Activity implements DataBridgeIF, View.OnClickListener {
-
+	ActionBar actionBar = null; // 액션바 세팅 시작
+	
 	private String methodUrl;
 	private String message;
 	private EditText txt_email, txt_pwd, txt_name, txt_phone, txt_age;
@@ -26,6 +30,7 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 	private Properties prop;
 
 	private ConnectionBridge bridge = new ConnectionBridge();
+	private User user = new User();
 
 	private boolean check = false;
 	private boolean isEmailInput;
@@ -50,6 +55,8 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 
 	private void setLayoutElement() {
 		// TODO Auto-generated method stub
+		actionBar = getActionBar();
+		actionBar.setTitle("회원가입");
 		txt_email = (EditText) findViewById(R.id.txt_mail);
 		txt_pwd = (EditText) findViewById(R.id.txt_pwd);
 		txt_name = (EditText) findViewById(R.id.txt_name);
@@ -75,6 +82,18 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 				Log.d("koo", prop.toString());
 				message = bridge.register(methodUrl, prop, this);
 				Log.d("test",message);
+				if(message.equals("exist"))
+				{
+					Toast.makeText(this, Sentence.existEmail, Toast.LENGTH_SHORT)
+					.show();
+				}
+				else
+				{
+					Toast.makeText(this, Sentence.successJoin, Toast.LENGTH_SHORT)
+					.show();
+					Intent intent = new Intent(this,profileActivity.class);
+					startActivity(intent);
+				}
 			}else{
 				Toast.makeText(this, Sentence.noInfomationMessage,Toast.LENGTH_LONG).show();
 			}
@@ -93,20 +112,36 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 		isNameInput = false;
 		isCellPhoneInput = false;
 		isBirthYearInput = false;
-
+		
+	
+		
 		String email = txt_email.getText().toString();
 		// 테스트 해보니 EditText는 입력을 안해도 공백 자체가 값으로 인식됨. 그래서 공백 여부 check
 		if (email.trim().length() != 0) {
-			prop.put("email", email);
-			isEmailInput = true;
+			if(!user.isEmailAddress(email))
+			{
+				Toast.makeText(this, Sentence.notEmailType, Toast.LENGTH_SHORT)
+				.show();
+			}
+			else{
+				prop.put("email", email);
+				isEmailInput = true;
+			}
 		} else {
 			Toast.makeText(this, Sentence.noEmailMessage, Toast.LENGTH_SHORT)
 					.show();
 		}
 		String password = txt_pwd.getText().toString();
 		if (password.trim().length() != 0) {
-			prop.put("password", password);
-			isPwdInput = true;
+			if(password.trim().length()<=5)
+			{
+				Toast.makeText(this, Sentence.notPwdType, Toast.LENGTH_SHORT)
+				.show();
+			}
+			else{
+				prop.put("password", password);
+				isPwdInput = true;
+			}
 		} else {
 			Toast.makeText(this, Sentence.noPwdMessage, Toast.LENGTH_SHORT)
 					.show();
@@ -167,7 +202,7 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 	@Override
 	public void setGenderOnActivity(String gender, int genderCode) {
 		btn_gender.setText(gender);
-		//prop.put("gender", "" + gender);
+		prop.put("gender", "" + genderCode);
 		isGenderInput = true;
 	}
 

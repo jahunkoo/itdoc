@@ -184,7 +184,6 @@ public class ConnectionBridge {
 				Log.d("kim", KmClinicView.get(i).toString());
 			}*/
 			
-			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

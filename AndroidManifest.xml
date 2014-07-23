@@ -26,13 +26,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="MainActivity"></activity>
-        <activity android:name="profileActivity"></activity>
-        <activity android:name="profileSetting.profileSettingActivity"></activity>
-        <activity android:name="profileSetting.settingHelp"></activity>
-        <activity android:name="clinicActivity.ClinicActivity"></activity>
-        <activity android:name="UserInsert"></activity>
+        <activity android:name="com.example.hanikok.MainActivity" >
+        </activity>
+        <activity android:name="com.example.hanikok.profileActivity" >
+        </activity>
+        <activity android:name="profileSetting.profileSettingActivity" >
+        </activity>
+        <activity android:name="profileSetting.settingHelp" >
+        </activity>
+        <activity android:name="clinicActivity.ClinicActivity" >
+        </activity>
+        <activity android:name="com.example.hanikok.UserInsert" >
+        </activity>
+        <activity
+            android:name="com.example.hanikok.HaniLogin"
+            android:label="@string/title_activity_hani_login" >
+        </activity>
     </application>
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>
