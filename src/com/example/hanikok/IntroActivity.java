@@ -71,7 +71,9 @@ public class IntroActivity extends Activity // ��Ʈ�� �κ� ��Ƽ�
 					//Animation alphaAnim = AnimationUtils.loadAnimation(
 						//	IntroActivity.this, R.anim.alpha); // �ִ� ���� ����
 					//intro.startAnimation(alphaAnim);
+					
 					Thread.sleep(1000); // 3�ʰ� �ΰ? �����ش�. ��Ʈ�� �����̺κ�
+					RegionThread.start();
 					isIntro();
 					//RegionThread.start();
 
@@ -173,7 +175,7 @@ public class IntroActivity extends Activity // ��Ʈ�� �κ� ��Ƽ�
 	};
 
 	private void isIntro() {
-		RegionThread.start();
+		//RegionThread.start();
 		Intent intent = new Intent(this, MainActivity.class); // Mainȭ������
 																// �̵��Ѵ�.
 		startActivity(intent);

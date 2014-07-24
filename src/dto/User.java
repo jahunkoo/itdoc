@@ -1,39 +1,52 @@
 package dto;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import util.ItDocConstants;
 import exception.UserException;
+import util.ItDocConstants;
 
 public class User {
 	
 	private final int DEFAULT_NUM = 0;
 	private final int MIN_PASSWORD_NUM = 6;
+	private final int BIRTH_YEAR_MIN = 1900;
+	private int currentYear;
 	private final String EMAIL_PATTERN =
 	            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 	                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	public static final String INPUT_EMPTY = "정보를 입력하세요";
+	public static final String NOT_EMAIL_TYPE = "이메일 형식이 아닙니다.";
+	public static final String PASSWORD_LENGTH_NEED_UP_TO_SIX = "비밀번호는 6자리 이상이어야 합니다.";
+	public static final String NOT_CORRECT_BIRTH_YEAR = "올바른 연도를 입력하세요";
 	private String email;
 	private String password;
 	private String name;
 	private String cellPhone;
-	private int age;
+	private int birthYear;
 	private int gender 	= DEFAULT_NUM;
 	private int flag	= DEFAULT_NUM;
 	
+		
+	//생성자 이전에 호출되는 부분
+	{
+		Calendar cal = Calendar.getInstance();
+		currentYear = Calendar.getInstance().get ( cal.YEAR );
+	}
 	
 	public User() {
 		super();
 	}
 
 	public User(String email, String password, String name, String cellPhone,
-			int age, int gender, int flag) {
+			int birthYear, int gender, int flag) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.cellPhone = cellPhone;
-		this.age = age;
+		this.birthYear = birthYear;
 		this.gender = gender;
 		this.flag = flag;
 	}
@@ -44,9 +57,9 @@ public class User {
 
 	public void setEmail(String email) throws UserException {
 		if(email == null || email.isEmpty()){
-			throw new UserException(ItDocConstants.INPUT_EMPTY);
+			throw new UserException(INPUT_EMPTY);
 		}else if(!isEmailAddress(email)){
-			throw new UserException(ItDocConstants.NOT_EMAIL_TYPE);
+			throw new UserException(NOT_EMAIL_TYPE);
 		}
 		
 		this.email = email;
@@ -58,9 +71,9 @@ public class User {
 
 	public void setPassword(String password) throws UserException {
 		if(password == null || password.isEmpty()){
-			throw new UserException(ItDocConstants.INPUT_EMPTY);
+			throw new UserException(INPUT_EMPTY);
 		}else if(password.length()<MIN_PASSWORD_NUM){
-			throw new UserException(ItDocConstants.PASSWORD_LENGTH_NEED_UP_TO_SIX);
+			throw new UserException(PASSWORD_LENGTH_NEED_UP_TO_SIX);
 		}
 		this.password = password;
 	}
@@ -81,12 +94,17 @@ public class User {
 		this.cellPhone = cellPhone;
 	}
 
-	public int getAge() {
-		return age;
+	public int getBirthYear() {
+		return birthYear;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthYear(int birthYear) throws UserException {
+		if(birthYear>=BIRTH_YEAR_MIN && birthYear<=currentYear){
+			this.birthYear = birthYear;
+		}else{
+			throw new UserException(NOT_CORRECT_BIRTH_YEAR);
+		}
+		
 	}
 
 	public int getGender() {
@@ -103,17 +121,18 @@ public class User {
 
 	public void setFlag(int flag) {
 		this.flag = flag;
+	}	
+	
+	   @Override
+	public String toString() {
+		return "User [DEFAULT_NUM=" + DEFAULT_NUM + ", MIN_PASSWORD_NUM="
+				+ MIN_PASSWORD_NUM + ", EMAIL_PATTERN=" + EMAIL_PATTERN
+				+ ", email=" + email + ", password=" + password + ", name="
+				+ name + ", cellPhone=" + cellPhone + ", birthYear="
+				+ birthYear + ", gender=" + gender + ", flag=" + flag + "]";
 	}
 
-	@Override
-	public String toString() {
-		return "User [email=" + email + ", password=" + password + ", name="
-				+ name + ", cellPhone=" + cellPhone + ", age=" + age
-				+ ", gender=" + gender + ", flag=" + flag + "]";
-	}
-	
-	
-	   private boolean isEmailAddress(String email) {
+	public boolean isEmailAddress(String email) {
 	        Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
 	        Matcher emailMatcher = emailPattern.matcher(email);
 

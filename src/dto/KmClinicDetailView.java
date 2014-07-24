@@ -26,8 +26,10 @@ public class KmClinicDetailView {
 	//private int userLikeNum;		//용해요 - 사용자가 한의원을 추천한 것 - 가본사람이 추천 누른 횟수    -> userSimpleList의 size()로 얻을 수 있다. 
 	private List<String> keywordList;	//한의원의 키워드 배열
 	private List<UserSimpleInfo> userSimpleInfoList;	//추천한 사람들의 간단한 정보들 (이메일, 사진, 이름)  
-	private List<Review> reviewList; // 현재 review 미구현 상태
-	private List<String> picturePathList;
+
+	private List<Review> reviewList;
+	private List<KmClinicPicture> kmClinicPictureList;
+
 	
 	public KmClinicDetailView() {
 		super();
@@ -40,7 +42,7 @@ public class KmClinicDetailView {
 			String remainRegion, int followNum, String homepage,
 			String linePhone, String details, int type,
 			List<String> keywordList, List<UserSimpleInfo> userSimpleInfoList,
-			List<Review> reviewList, List<String> picturePathList) {
+			List<Review> reviewList, List<KmClinicPicture> kmClinicPictureList) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -58,7 +60,7 @@ public class KmClinicDetailView {
 		this.keywordList = keywordList;
 		this.userSimpleInfoList = userSimpleInfoList;
 		this.reviewList = reviewList;
-		this.picturePathList = picturePathList;
+		this.kmClinicPictureList = kmClinicPictureList;
 	}
 
 	public int getId() {
@@ -189,12 +191,12 @@ public class KmClinicDetailView {
 		this.reviewList = reviewList;
 	}
 
-	public List<String> getPicturePathList() {
-		return picturePathList;
+	public List<KmClinicPicture> getKmClinicPictureList() {
+		return kmClinicPictureList;
 	}
 
-	public void setPicturePathList(List<String> picturePathList) {
-		this.picturePathList = picturePathList;
+	public void setKmClinicPictureList(List<KmClinicPicture> kmClinicPictureList) {
+		this.kmClinicPictureList = kmClinicPictureList;
 	}
 
 	@Override
@@ -207,10 +209,9 @@ public class KmClinicDetailView {
 				+ ", homepage=" + homepage + ", linePhone=" + linePhone
 				+ ", details=" + details + ", type=" + type + ", keywordList="
 				+ keywordList + ", userSimpleInfoList=" + userSimpleInfoList
-				+ ", reviewList=" + reviewList + ", picturePathList="
-				+ picturePathList + "]";
+				+ ", reviewList=" + reviewList + ", kmClinicPictureList="
+				+ kmClinicPictureList + "]";
 	}
-	
-	
+
 	
 }

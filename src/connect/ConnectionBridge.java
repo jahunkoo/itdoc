@@ -166,7 +166,7 @@ public class ConnectionBridge {
 		} catch (NullPointerException e) {
 
 		}
-
+		
 		return timeList;
 	}
 
@@ -179,7 +179,7 @@ public class ConnectionBridge {
 			connection.downloadTask.execute(targetUrl);
 			String result = connection.downloadTask.get();
 			KmClinicView = (ArrayList<KmClinicView>) new JsonParser(methodUrl).parse(result);
-			
+	
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -258,11 +258,14 @@ public class ConnectionBridge {
 	public String register(String methodUrl, Properties props, Context context) {
 		String result = null;
 		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
-
+		Log.d("koo", targetUrl);
+		//http://localhost:8080/ItDocServer/register?email=asd2323sd@gmail.com&password=asdasd
 		HttpConnectionModule connection = new HttpConnectionModule(context);
 		try {
 			connection.setMethod(HttpConnectionModule.POST);
 			connection.setProperties(props);
+			Log.d("koo", props.toString());
+			
 			connection.downloadTask.execute(targetUrl);
 			String data = connection.downloadTask.get();
 			result = (String) new JsonParser(methodUrl).parse(data);
@@ -297,7 +300,7 @@ public class ConnectionBridge {
 		connection.setProfileImgFile(uploadFile, email, picturePath, ItDocConstants.OBJECT_TYPE_USER);
 
 		connection.downloadTask.execute(targetUrl);
-
+		
 		try {
 			String data = connection.downloadTask.get();
 			// {"result","success"}

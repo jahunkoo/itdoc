@@ -1,33 +1,44 @@
 package com.example.hanikok;
 
+import com.example.util.Sentence;
+
 import profileSetting.profileSettingActivity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class profileActivity extends Activity implements OnClickListener {
 
 	Button btn_setting = null;
-	ActionBar actionBar = null; //액션바 세팅 시작
-
+	ActionBar actionBar = null; // 액션바 세팅 시작
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_activity);
+		
+		///회원가입, 로그인, 로그아웃 버튼
+		Button hani_join_btn = (Button)findViewById(R.id.join_hani);
+		hani_join_btn.setOnClickListener(this);
+		Button hani_login_btn = (Button)findViewById(R.id.login_hani);
+		hani_login_btn.setOnClickListener(this);
+		Button hani_logout_btn = (Button)findViewById(R.id.logout_hani);
+		hani_logout_btn.setOnClickListener(this);
+		
 		setElements();
 	}
-	
-	private void setElements(){
-		
-		//액션바에 객체 할당 및 잔 작업
+
+	private void setElements() {
+
+		// 액션바에 객체 할당 및 잔 작업
 		actionBar = getActionBar();
 		actionBar.setTitle("프로필");
 	}
@@ -35,10 +46,28 @@ public class profileActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
-		switch(v.getId()){
+		switch (v.getId()) {
 		
+		//회원가입
+		case R.id.join_hani:
+			Intent intent = new Intent(this,UserInsert.class);
+			startActivity(intent);
+			break;
+
+		case R.id.login_hani:
+			Intent intent_login = new Intent(this,HaniLogin.class);
+			startActivity(intent_login);
+			//Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT)
+			//.show();
+			break;
+			
+		case R.id.logout_hani:
+			Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT)
+			.show();
+			break;
+
 		}
-		
+
 	}
 
 	@Override
@@ -46,7 +75,7 @@ public class profileActivity extends Activity implements OnClickListener {
 
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu, menu);
-		
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -54,16 +83,15 @@ public class profileActivity extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		
-		case R.id.menu_setting :
-			Intent intent = new Intent (profileActivity.this,profileSettingActivity.class);
+
+		case R.id.menu_setting:
+			Intent intent = new Intent(profileActivity.this,
+					profileSettingActivity.class);
 			startActivity(intent);
-		
+
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 
-	
-	
 }

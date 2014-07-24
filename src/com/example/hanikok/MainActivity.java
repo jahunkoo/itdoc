@@ -36,11 +36,13 @@ import android.widget.Toast;
 import clinicActivity.ClinicActivity;
 
 import com.example.hanikok.ListAdapter.SimpleClinicList;
+import com.example.hanikok.dialog.LocationDialog;
 
 import connect.ConnectionBridge;
 
 public class MainActivity extends FragmentActivity implements OnClickListener, android.widget.AbsListView.OnScrollListener, OnItemClickListener {
 
+	public static String userId;
 	private short currentTab = 0; // 현재 탭상태 받는 것
 	private boolean isPressed = false; // 두번 누르면 종료 되기 위한 조건
 	Handler mHandler = null;
