@@ -13,10 +13,10 @@ import util.ItDocUtil;
 import util.JsonParser;
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import dto.BigRegion;
 import dto.Grade;
+import dto.KmClinicDetailView;
 import dto.KmClinicView;
 import dto.MiddleRegion;
 import dto.Time;
@@ -193,14 +193,10 @@ public class ConnectionBridge extends Activity{
 			connection.setMethod(HttpConnectionModule.GET);
 			connection.downloadTask.execute(targetUrl);
 			String result = connection.downloadTask.get();
-			KmClinicView = (ArrayList<KmClinicView>) new JsonParser(methodUrl)
-					.parse(result);
 
-			/*
-			 * for (int i = 0; i < KmClinicView.size(); i++) { Log.d("kim",
-			 * KmClinicView.get(i).toString()); }
-			 */
-
+			KmClinicView = (ArrayList<KmClinicView>) new JsonParser(methodUrl).parse(result);
+	
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -216,7 +212,65 @@ public class ConnectionBridge extends Activity{
 
 		return KmClinicView;
 	}
+	
+	
+	public ArrayList<KmClinicDetailView> getKmClinicDetailViewList(String methodUrl, Context context, int clinicId) {
+		ArrayList<KmClinicDetailView> KmClinicDetailViewList = null;
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
+		
+		Properties prop = new Properties();
+		prop.setProperty("kmClinicId", String.valueOf(clinicId));
+		try {
+			HttpConnectionModule connection = new HttpConnectionModule(context);
+			connection.setMethod(HttpConnectionModule.POST);
+			connection.setProperties(prop);
+			connection.downloadTask.execute(targetUrl);
+			String result = connection.downloadTask.get();
+			KmClinicDetailViewList = (ArrayList<KmClinicDetailView>) new JsonParser(methodUrl).parse(result);
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			
+		} catch (UnsupportedEncodingException e) {
+		}
 
+		return KmClinicDetailViewList;
+	}
+
+	public ArrayList<String> getAllKeywords(String methodUrl, Context context) {
+		ArrayList<String> AllKeywordsList = null;
+		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME, methodUrl);
+		
+		try {
+			HttpConnectionModule connection = new HttpConnectionModule(context);
+			connection.setMethod(HttpConnectionModule.GET);
+			connection.downloadTask.execute(targetUrl);
+			String result = connection.downloadTask.get();
+			AllKeywordsList = (ArrayList<String>) new JsonParser(methodUrl).parse(result);
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			
+		}
+
+		return AllKeywordsList;
+	}
+	
+	
 	public String register(String methodUrl, Properties props, Context context) {
 		String result = null;
 		String targetUrl = getFullUrl(MAIN_SERVER_ADDRESS, MAIN_PROJECT_NAME,

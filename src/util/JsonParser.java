@@ -50,6 +50,10 @@ public class JsonParser {
 			obj = parseTimeList(data);
 		} else if (methodUrl.equals(ItDocConstants.METHOD_URL_GET_ALLKMCLINIC_LIST)) {
 			obj = parseKmClinicViewList(data);
+		} else if (methodUrl.equals(ItDocConstants.METHOD_URL_GET_DETAIL_KM_CLINIC)) {
+			obj = parseKmClinicDetailViewList(data);
+		} else if (methodUrl.equals(ItDocConstants.METHOD_URL_GET_ALL_KEYWORDS)) {
+			obj = parseAllKeywords(data);
 		}
 		return obj;
 	}
@@ -153,36 +157,67 @@ public class JsonParser {
 			KmClinicDetailView kmClinicDetailView = new KmClinicDetailView();
 			kmClinicDetailView.setId(indexobj.getInt("id"));
 			kmClinicDetailView.setName(indexobj.getString("name"));
+			
+			Log.d("kim", "kmClinicDetailView is " + kmClinicDetailView.getName());;
+			
+			// keywordArray 받아와야 함 Array를 받아 와서 다시 string list 형태로 바꿔 주는 형태
+			JSONArray JSONindexArray = new JSONArray();
 
-			// keywordArray 받아와야 함
-			// picturePathArray 받아와야 함
-			// userSimpleInfoArray 받아와야 함
+			JSONindexArray = indexobj.getJSONArray("keywordList");
+			
+			List<String> keywordList = new ArrayList();
 
-			kmClinicDetailView.setDetails(indexobj.getString("detail"));
-			kmClinicDetailView.setLinePhone(indexobj.getString("linePhone"));
-			kmClinicDetailView.setBigRegionCode(indexobj.getString("bigRegionCode"));
-			kmClinicDetailView.setBigRegionName(indexobj.getString("bigRigionName"));
-			kmClinicDetailView.setMiddleRegionCode(indexobj.getString("middleRegionCode"));
-			kmClinicDetailView.setMiddleRegionName(indexobj.getString("middleRegionName"));
-			//kmClinicDetailView.setRemainRegionName(indexobj.getString("remainRegionNmae"));
-			kmClinicDetailView.setMapPoint(indexobj.getString("mapPoint"));
-			kmClinicDetailView.setHomepage(indexobj.getString("homePage"));
-			kmClinicDetailView.setType(indexobj.getInt("type"));
-			kmClinicDetailView.setFollowNum(indexobj.getInt("followNum"));
+			try {
 
-			// reviewArray 받아 와야 함.
+				for (int idx = 0; idx < JSONindexArray.length(); idx++) {
 
-			// keywordArray 를 받기 위한 형태
-
-			JSONArray JSONkeywordArray = new JSONArray();
-			JSONkeywordArray = indexobj.getJSONArray("keywordArray");
-			String[] keyArraytemp;
-			for (int idx = 0; idx < JSONkeywordArray.length(); idx++) {
-				// keyArraytemp[i] = JSONkeywordArray.getString(i);
+					keywordList.add(JSONindexArray.getString(idx));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("kim","JsonParser(169)");
 			}
 
+			kmClinicDetailView.setKeywordList(keywordList);
+			// 기본적 파싱
+
+			kmClinicDetailView.setDetails(indexobj.getString("details"));
+			kmClinicDetailView.setLinePhone(indexobj.getString("linePhone"));
+			kmClinicDetailView.setBigRegionCode(indexobj.getString("bigRegionCode"));
+			kmClinicDetailView.setBigRegionName(indexobj.getString("bigRegionName"));
+			kmClinicDetailView.setMiddleRegionCode(indexobj.getString("middleRegionCode"));
+			kmClinicDetailView.setMiddleRegionName(indexobj.getString("middleRegionName"));
+			kmClinicDetailView.setRemainRegion(indexobj.getString("remainRegion"));
+			// kmClinicDetailView.setMapPoint(indexobj.getString("mapPoint"));
+			kmClinicDetailView.setHomepage(indexobj.getString("homepage"));
+			kmClinicDetailView.setType(indexobj.getInt("type"));
+			// kmClinicDetailView.setFollowNum(indexobj.getInt("followNum"));
+
+			// userSimpleInfoArray 받아와야 함 받아와서 다시 내부에서 재 파싱 하는 형태
+			JSONindexArray = indexobj.getJSONArray("userSimpleInfoList");
+			List<UserSimpleInfo> userSimpleInfoList = new ArrayList();
+
+			try {
+				for (int idx = 0; idx < JSONindexArray.length(); idx++) {
+					indexobj = JSONindexArray.getJSONObject(i);
+
+					UserSimpleInfo userSimpleInfo = new UserSimpleInfo();
+					userSimpleInfo.setEmail(indexobj.getString("email"));
+					userSimpleInfo.setName(indexobj.getString("name"));
+					userSimpleInfo.setPicturePath(indexobj.getString("picturePath"));
+					userSimpleInfoList.add(userSimpleInfo);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("kim","JsonParser(204)");
+			}
+			kmClinicDetailView.setUserSimpleInfoList(userSimpleInfoList);
+
+			// reviewArray 받아 와야 함. 현재 미구현 review 자체가 현재 미구현 상태
+			
 			KmClinicDetailViewList.add(kmClinicDetailView);
 		}
+		
 		return KmClinicDetailViewList;
 	}
 
@@ -209,14 +244,14 @@ public class JsonParser {
 			kmClinicView.setRatingNum(indexobj.getInt("ratingNum"));
 			kmClinicView.setPicturePath(indexobj.getString("picturePath"));
 			kmClinicView.setUserLikeNum(indexobj.getInt("userLikeNum"));
-			Log.d("kim", kmClinicView.toString());
 			JSONArray JSONindexArray = new JSONArray();
 			JSONindexArray = indexobj.getJSONArray("keywordList");
 			List<String> keywordList = new ArrayList();
-			try{
-			for (int idx = 0; idx < JSONindexArray.length(); idx++) {
-				keywordList.add(JSONindexArray.getString(i));
-			}}catch(Exception e) {
+			try {
+				for (int idx = 0; idx < JSONindexArray.length(); idx++) {
+					keywordList.add(JSONindexArray.getString(i));
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
@@ -224,19 +259,20 @@ public class JsonParser {
 
 			JSONindexArray = indexobj.getJSONArray("userSimpleInfoList");
 			List<UserSimpleInfo> userSimpleInfoList = new ArrayList();
-			
-			try{
-			for (int idx = 0; idx < JSONindexArray.length(); idx++) {
-				indexobj = JSONindexArray.getJSONObject(i);
 
-				UserSimpleInfo userSimpleInfo = new UserSimpleInfo();
+			try {
+				for (int idx = 0; idx < JSONindexArray.length(); idx++) {
+					indexobj = JSONindexArray.getJSONObject(i);
 
-				userSimpleInfo.setEmail(indexobj.getString("email"));
-				userSimpleInfo.setName(indexobj.getString("name"));
-				userSimpleInfo.setPicturePath(indexobj.getString("picturePath"));
+					UserSimpleInfo userSimpleInfo = new UserSimpleInfo();
 
-				userSimpleInfoList.add(userSimpleInfo);
-			}} catch(Exception e) {
+					userSimpleInfo.setEmail(indexobj.getString("email"));
+					userSimpleInfo.setName(indexobj.getString("name"));
+					userSimpleInfo.setPicturePath(indexobj.getString("picturePath"));
+
+					userSimpleInfoList.add(userSimpleInfo);
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			kmClinicView.setUserSimpleInfoList(userSimpleInfoList);
@@ -246,5 +282,21 @@ public class JsonParser {
 
 		return kmClinicViewList;
 	}
+	
+	// 메서드 네이밍 : parse+클래스명+자료구조
+		private ArrayList<String> parseAllKeywords(String data) throws JSONException {
+			ArrayList<String> AllKeywordsList = new ArrayList<String>();
 
+			JSONObject jsonObj = new JSONObject(data);
+			JSONArray jsonArray = jsonObj.getJSONArray("keywords");
+			for (int i = 0; i < jsonArray.length(); i++) {
+
+				AllKeywordsList.add(jsonArray.getString(i));
+				
+			}
+			
+			return AllKeywordsList;
+			
+		}
+		
 }

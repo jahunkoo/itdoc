@@ -26,8 +26,10 @@ public class KmClinicDetailView {
 	//private int userLikeNum;		//용해요 - 사용자가 한의원을 추천한 것 - 가본사람이 추천 누른 횟수    -> userSimpleList의 size()로 얻을 수 있다. 
 	private List<String> keywordList;	//한의원의 키워드 배열
 	private List<UserSimpleInfo> userSimpleInfoList;	//추천한 사람들의 간단한 정보들 (이메일, 사진, 이름)  
+
 	private List<Review> reviewList;
 	private List<KmClinicPicture> kmClinicPictureList;
+
 	
 	public KmClinicDetailView() {
 		super();
