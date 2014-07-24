@@ -1,11 +1,16 @@
 package com.example.hanikok;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,12 +25,16 @@ import com.example.util.Sentence;
 import connect.ConnectionBridge;
 import dto.User;
 
-public class UserInsert extends Activity implements DataBridgeIF, View.OnClickListener {
+public class UserInsert extends Activity implements View.OnClickListener {
 	ActionBar actionBar = null; // 액션바 세팅 시작
+	
+	View user_layout;
+	View user_insert_layout;
 	
 	private String methodUrl;
 	private String message;
-	private EditText txt_email, txt_pwd, txt_name, txt_phone, txt_age;
+	private EditText txt_email, txt_pwd, txt_name;
+	//private EditTExt txt_phone, txt_age;
 	private Button btn_submit, btn_gender;
 	private Properties prop;
 
@@ -36,10 +45,10 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 	private boolean isEmailInput;
 	private boolean isPwdInput;
 	private boolean isNameInput;
-	private boolean isCellPhoneInput;
+/*	private boolean isCellPhoneInput;
 	private boolean isBirthYearInput;
-	private boolean isGenderInput;
-	private final int SUCCESS_NUM = 6;
+	private boolean isGenderInput;*/
+	private final int SUCCESS_NUM = 3;
 
 	public InputMethodManager imm;
 
@@ -47,6 +56,11 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_insert);
+		
+		user_layout = (View)findViewById(R.id.user_layout);
+		user_insert_layout = (View)findViewById(R.id.user_insert_layout);
+	//	user_layout.setVisibility(View.VISIBLE);
+	//	user_insert_layout.setVisibility(View.GONE);
 
 		prop = new Properties();
 		setLayoutElement();
@@ -57,12 +71,14 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 		// TODO Auto-generated method stub
 		actionBar = getActionBar();
 		actionBar.setTitle("회원가입");
+		
 		txt_email = (EditText) findViewById(R.id.txt_mail);
 		txt_pwd = (EditText) findViewById(R.id.txt_pwd);
 		txt_name = (EditText) findViewById(R.id.txt_name);
-		txt_phone = (EditText) findViewById(R.id.txt_cell);
+	/*	txt_phone = (EditText) findViewById(R.id.txt_cell);
 		txt_age = (EditText) findViewById(R.id.txt_age);
 		btn_gender = (Button) findViewById(R.id.btn_gender);
+		*/
 		btn_submit = (Button) findViewById(R.id.join_submit);
 	}
 
@@ -89,6 +105,7 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 				}
 				else
 				{
+					phoneBook();
 					Toast.makeText(this, Sentence.successJoin, Toast.LENGTH_SHORT)
 					.show();
 					Intent intent = new Intent(this,profileActivity.class);
@@ -105,13 +122,79 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 		}
 	}
 
+	private Cursor getURI() 
+    {
+        // 주소록 URI        
+        Uri people = Contacts.CONTENT_URI;
+        
+        // 검색할 컬럼 정하기
+        String[] projection = new String[] { Contacts._ID, Contacts.DISPLAY_NAME, Contacts.HAS_PHONE_NUMBER };
+        
+        // 쿼리 날려서 커서 얻기
+        String[] selectionArgs = null;
+        String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";    
+
+        // managedquery 는 activity 메소드이므로 아래와 같이 처리함
+        return getContentResolver().query(people, projection, null, selectionArgs, sortOrder);
+        // return managedQuery(people, projection, null, selectionArgs, sortOrder);
+    }
+	
+	public void phoneBook() {
+        Cursor cursor = getURI();                    // 전화번호부 가져오기    
+
+		int end = cursor.getCount();                // 전화번호부의 갯수 세기
+		Log.d("kkm_phone", "end = "+end);
+
+		String [] name = new String[end];    // 전화번호부의 이름을 저장할 배열 선언
+		String [] phone = new String[end];    // 전화번호부의 이름을 저장할 배열 선언
+		int count = 0;    
+
+		if(cursor.moveToFirst()) 
+		{
+		    // 컬럼명으로 컬럼 인덱스 찾기 
+		    int idIndex = cursor.getColumnIndex("_id");
+
+		    do 
+		    {
+		//        tempItem = new TempItem();
+		        
+		        // 요소값 얻기
+		        int id = cursor.getInt(idIndex);        
+		        String phoneChk = cursor.getString(2);
+		        if (phoneChk.equals("1")) {
+		            Cursor phones = getContentResolver().query(
+		                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+		                    null,
+		                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+		                            + " = " + id, null, null);
+
+		            while (phones.moveToNext()) {
+		                phone[count] = phones
+		                        .getString(phones
+		                                .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+		            }        
+		        }
+		        name[count] = cursor.getString(1);
+
+		        // 개별 연락처 삭제                    
+		        // rowNum = getBaseContext().getContentResolver().delete(RawContacts.CONTENT_URI, RawContacts._ID+ " =" + id,null);
+
+		        // LogCat에 로그 남기기
+		        Log.d("kkm_phone", "id=" + id +", name["+count+"]=" + name[count]+", phone["+count+"]=" + phone[count]);
+		        count++;
+		        
+		    } while(cursor.moveToNext() || count > end);
+		}
+    }
+
+	
 	private boolean getTextInformation() {
 		// TODO Auto-generated method stub
 		isEmailInput = false;
 		isPwdInput = false;
 		isNameInput = false;
-		isCellPhoneInput = false;
-		isBirthYearInput = false;
+/*		isCellPhoneInput = false;
+		isBirthYearInput = false;*/
 	
 		
 		String email = txt_email.getText().toString();
@@ -153,7 +236,7 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 			Toast.makeText(this, Sentence.noNameMessage, Toast.LENGTH_SHORT)
 					.show();
 		}
-		String cellPhone = txt_phone.getText().toString();
+	/*	String cellPhone = txt_phone.getText().toString();
 		if (cellPhone.trim().length() != 0) {
 			prop.put("cellPhone", cellPhone);
 			isCellPhoneInput = true;
@@ -177,7 +260,7 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 		} else {
 			Toast.makeText(this, Sentence.noAgeMessage, Toast.LENGTH_SHORT)
 					.show();
-		}
+		}*/
 
 		return true;
 	}
@@ -190,20 +273,20 @@ public class UserInsert extends Activity implements DataBridgeIF, View.OnClickLi
 		if (isEmailInput == true) count++;
 		if (isPwdInput == true)	count++;
 		if (isNameInput == true) count++;
-		if (isCellPhoneInput == true) count++;
+	/*	if (isCellPhoneInput == true) count++;
 		if (isBirthYearInput == true)	count++;
-		if (isGenderInput == true) count++;
+		if (isGenderInput == true) count++;*/
 		if (count == SUCCESS_NUM) check = true;
 		return check;
 	}
 
 	// ------------------------- 다이얼로그 창에서 받은 값을 처리하는 부분-------------------------
-	@Override
+	/*@Override
 	public void setGenderOnActivity(String gender, int genderCode) {
 		btn_gender.setText(gender);
 		prop.put("gender", "" + genderCode);
 		isGenderInput = true;
 	}
-
+*/
 
 }

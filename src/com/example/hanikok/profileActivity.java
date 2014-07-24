@@ -1,7 +1,5 @@
 package com.example.hanikok;
 
-import com.example.util.Sentence;
-
 import profileSetting.profileSettingActivity;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,10 +18,16 @@ public class profileActivity extends Activity implements OnClickListener {
 	Button btn_setting = null;
 	ActionBar actionBar = null; // 액션바 세팅 시작
 	
+//	View user_layout;
+//	View user_insert_layout;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_activity);
+		
+	//	user_layout = (View)findViewById(R.id.user_layout);
+	//	user_insert_layout = (View)findViewById(R.id.user_insert_layout);
 		
 		///회원가입, 로그인, 로그아웃 버튼
 		Button hani_join_btn = (Button)findViewById(R.id.join_hani);
@@ -50,7 +54,7 @@ public class profileActivity extends Activity implements OnClickListener {
 		
 		//회원가입
 		case R.id.join_hani:
-			Intent intent = new Intent(this,UserInsert.class);
+			Intent intent = new Intent(this,UserActivity.class);
 			startActivity(intent);
 			break;
 

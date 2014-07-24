@@ -3,100 +3,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ScrollView
-        android:id="@+id/scroller"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdgeLength="0.0dip"
-        android:scrollbars="none" >
-        
     <LinearLayout
+        android:id="@+id/user_insert_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-        <EditText
-            android:id="@+id/txt_mail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1.0"
-            android:hint="이메일을 입력하세요."
-            android:inputType="textEmailAddress"
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/txt_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1.0"
-            android:hint="비밀번호를 입력하세요."
-            android:inputType="textPassword"
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/txt_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1.0"
-            android:hint="이름을 입력하세요."
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/txt_cell"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1.0"
-            android:hint="핸드폰 번호를 입력하세요."
-            android:inputType="phone"
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/txt_age"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1.0"
-            android:hint="출생년도를 입력하세요."
-            android:inputType="number"
-            android:singleLine="true" />
+        android:orientation="vertical"
+        android:weightSum="1" >
 
         <LinearLayout
-            android:id="@+id/linear_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:orientation="horizontal" >
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:weightSum="1"
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/label_gender"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="성별" />
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="로그인" />
 
-            <Button
-                android:id="@+id/btn_gender"
+            <EditText
+                android:id="@+id/txt_mail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ffffff"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:text="" />
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:hint="이메일을 입력하세요."
+                android:inputType="textEmailAddress"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/txt_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:hint="비밀번호를 입력하세요."
+                android:inputType="textPassword"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/txt_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:hint="이름을 입력하세요."
+                android:singleLine="true" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/join_submit"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1.0"
-            android:singleLine="true"
-            android:text="회원가입" />
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <Button
+                android:id="@+id/join_submit"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:text="회원가입"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:gravity="center_horizontal"
+                android:text="회원가입을 함으로써" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                 android:gravity="center_horizontal"
+                android:text="잇닥(it doc)의 서비스 약관 가입정보 " />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                 android:gravity="center_horizontal"
+                android:text="보호정책 등에 동의하게 됩니다." />
+        </LinearLayout>
     </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>

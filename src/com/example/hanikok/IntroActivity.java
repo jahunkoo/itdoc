@@ -65,9 +65,7 @@ public class IntroActivity extends Activity // ��Ʈ�� �κ� ��Ƽ�
 			public void run() {
 				try {
 
-					intro = (ImageView) findViewById(R.id.intro_Img); // ��Ʈ��
-																		// �̹���
-																		// ����
+					intro = (ImageView) findViewById(R.id.intro_Img); 
 					//Animation alphaAnim = AnimationUtils.loadAnimation(
 						//	IntroActivity.this, R.anim.alpha); // �ִ� ���� ����
 					//intro.startAnimation(alphaAnim);
