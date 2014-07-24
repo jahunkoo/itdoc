@@ -1,5 +1,8 @@
 package clinicActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,17 +12,14 @@ import android.widget.TextView;
 
 import com.example.hanikok.R;
 
+import connect.ConnectionBridge;
+import dto.KmClinicDetailView;
+
 public class ClinicActivity extends Activity {
 
 	ActionBar actionBar = null;
 	private int clinicId; // 나중에 액티비티에서 넘겨받은 한의원 id를 여기에 저장한다. 이 id를 기반으로 서버에서
 							// 정보를 요청한다.
-
-	private String clinicDetail;
-	private String phoneNumber;
-	private String location;
-	private String price;
-	private String workTime;
 
 	ImageView image;
 
@@ -31,16 +31,24 @@ public class ClinicActivity extends Activity {
 	TextView tvPrice;
 	TextView tvWorkTime;
 
+	KmClinicDetailView kmClinicDetailView;
+	ArrayList<KmClinicDetailView> kmClinicDetailViewList = new ArrayList();
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		clinicId = getIntent().getIntExtra("Id", 1);
 		setContentView(R.layout.clinic);
-		
-		Log.d("kim","ClinicActivity(39) clinic ID is " + clinicId);
-		
-		setElements();
 
+		setElements();
+		setConnection();
+		setDetails();
+
+	}
+
+	private void setConnection() {
+		ConnectionBridge connectionBridge = new ConnectionBridge();
+		kmClinicDetailViewList = connectionBridge.getKmClinicDetailViewList("getDetailKmClinic", this, clinicId);
+		kmClinicDetailView = kmClinicDetailViewList.get(0);
 	}
 
 	private void setElements() {
@@ -59,4 +67,26 @@ public class ClinicActivity extends Activity {
 
 	}
 
+	private void setDetails(){
+		tvClinicName.setText(kmClinicDetailView.getName());
+		tvClinicMajor.setText(kmClinicDetailView.getKeywordList().toString());
+		tvDetail.setText(kmClinicDetailView.getDetails());
+		tvPhoneNumber.setText(kmClinicDetailView.getLinePhone());
+		
+		String location = kmClinicDetailView.getBigRegionName() + kmClinicDetailView.getMiddleRegionName() + kmClinicDetailView.getRemainRegion();
+		
+		tvLocation.setText(location);
+	}
+	
+	private String stringParse (List<String> list) {
+		StringBuffer buffer = null;
+		
+		for (int i=0;i<list.size();i++) {
+			buffer.append(list.get(i));
+		}
+		
+		return buffer.toString();
+		
+	}
+	
 }

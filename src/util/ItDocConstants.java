@@ -56,6 +56,8 @@ public class ItDocConstants {
 	public static final String METHOD_URL_GET_WEEK_LIST = "getWeekList";
 	public static final String METHOD_URL_GET_TIME_LIST = "getTimeList";
 	public static final String METHOD_URL_GET_ALLKMCLINIC_LIST = "getAllKmClinic";
+	public static final String METHOD_URL_GET_DETAIL_KM_CLINIC = "getDetailKmClinic";
+	public static final String METHOD_URL_GET_ALL_KEYWORDS = "getAllKeywords";
 	public static final String METHOD_URL_REGISTER = "register";
 	public static final String METHOD_URL_LOGIN = "login";
 }

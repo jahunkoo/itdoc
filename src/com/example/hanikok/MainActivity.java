@@ -3,10 +3,6 @@ package com.example.hanikok;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.hanikok.ListAdapter.SimpleClinicList;
-
-import clinicActivity.ClinicActivity;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +21,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -35,8 +33,13 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
+import clinicActivity.ClinicActivity;
 
-public class MainActivity extends FragmentActivity implements OnClickListener, android.widget.AbsListView.OnScrollListener,OnItemClickListener {
+import com.example.hanikok.ListAdapter.SimpleClinicList;
+
+import connect.ConnectionBridge;
+
+public class MainActivity extends FragmentActivity implements OnClickListener, android.widget.AbsListView.OnScrollListener, OnItemClickListener {
 
 	private short currentTab = 0; // 현재 탭상태 받는 것
 	private boolean isPressed = false; // 두번 누르면 종료 되기 위한 조건
@@ -58,7 +61,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 	// -----------------------------------------------------------//
 
 	// ------------------검색 카테고리-----------------------------//
-	ImageView goSearchView1; // 한이원 이름 또는 병명 검색창
+	AutoCompleteTextView  goSearchView1; // 한이원 이름 또는 병명 검색창
 	ImageView goSearchView2; // 지역 또는 지하철역 검색창
 	ImageView goSearchView3; // 사람 이름 또는 리스트이름 검색창
 	View searchView1, searchView2, searchView3; // 검색창 레이아웃
@@ -137,7 +140,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 		// --------------------------------------------------------//
 
 		// -------------검색 카테고리-------------------------------//
-		goSearchView1 = (ImageView) findViewById(R.id.SearchView_btn1);
+		goSearchView1 = (AutoCompleteTextView) findViewById(R.id.SearchView_btn1);
 		goSearchView2 = (ImageView) findViewById(R.id.SearchView_btn2);
 		goSearchView3 = (ImageView) findViewById(R.id.SearchView_btn3);
 		goSearchView1.setOnClickListener(this);
@@ -155,6 +158,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 		searchView_down = (View) findViewById(R.id.tabhost);
 		// searchView1.setVisibility(View.VISIBLE);
 		searchView_up.setVisibility(View.GONE);
+
+		// 자동 완성 기능을 위한 키워드들의 리스트를 위해 만든 ArrayList
+		ArrayList<String> allKeywordsList = new ArrayList<String>();
+		
+		// 모든 키워드를 받아 오도록 만든 url과 통신하여 키워드를 리스트화 시킨다.
+		ConnectionBridge keywordConnection = new ConnectionBridge();
+		allKeywordsList = keywordConnection.getAllKeywords("getAllKeywords", this);
+		ArrayAdapter<String> keywordsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, allKeywordsList);
+		goSearchView1.setAdapter(keywordsAdapter);
 
 		// --------------------------------------------------------//
 
@@ -337,7 +349,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 		}
 	}
 
-	
 	@Override
 	public void onBackPressed() {
 
@@ -485,7 +496,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 					actionBar.setTitle("검색");
 				}
 				if ("Tab5".equals(tabId)) { // 설정을 누를때 새로운 액티비티를 연다
-					tabHost.setCurrentTab(currentTab); // 설정을 누르기 전의 탭의 상태로 변환 한다.
+					tabHost.setCurrentTab(currentTab); // 설정을 누르기 전의 탭의 상태로 변환
+														// 한다.
 					Intent intent = new Intent(MainActivity.this, profileActivity.class);
 					startActivity(intent);
 				}
@@ -580,17 +592,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener, a
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		
-		SimpleClinicList simpleClinicList = (SimpleClinicList) parent.getAdapter().getItem(position); 
-		
+
+		SimpleClinicList simpleClinicList = (SimpleClinicList) parent.getAdapter().getItem(position);
+
 		int clinicId = simpleClinicList.getId();
-		
-		Log.d("kim", "MainActivity(592) clinicId = " + clinicId); 
-		
-		Intent intent = new Intent(MainActivity.this,ClinicActivity.class);
-		intent.putExtra("Id",clinicId);
+
+		Log.d("kim", "MainActivity(592) clinicId = " + clinicId);
+
+		Intent intent = new Intent(MainActivity.this, ClinicActivity.class);
+		intent.putExtra("Id", clinicId);
 		startActivity(intent);
-		
+
 	}
 
 }
