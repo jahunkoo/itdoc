@@ -13,15 +13,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -29,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import connect.ConnectionBridge;
 
@@ -252,8 +250,15 @@ public class ImageSelectHelperActivity extends Activity {
 	 */
 	private void doFinalProcess() {
 		
+		// 저장소 객체를 생성
+		SharedPreferences shared_user_info = getSharedPreferences("user_info", 0);
+		String email = shared_user_info.getString("user_email", "defaultemail@email.com");
+		
+		Log.d("kim","ImageSelectHelperActivity(257) get email -> " + email);
+		
 		ConnectionBridge bridge = new ConnectionBridge();
-		bridge.insertImage("insertPicture", getTempImageFile(), this);
+		
+		bridge.insertImage("insertPicture", getTempImageFile(), this, email);
 		
 		// sample size 를 적용하여 bitmap load.
 		Bitmap bitmap = loadImageWithSampleSize(getTempImageFile());

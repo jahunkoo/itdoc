@@ -41,9 +41,7 @@
         </activity>
         <activity android:name="clinicActivity.ClinicActivity" >
         </activity>
-        <activity android:name="com.example.hanikok.UserActivity" >
-        </activity>
-        <activity android:name="com.example.hanikok.ProfilePictureActivity" >
+        <activity android:name="UserActivity" >
         </activity>
         <activity
             android:name="com.example.hanikok.HaniLogin"
@@ -53,6 +51,7 @@
             android:name="com.example.hanikok.BaseActivity"
             android:label="@string/title_activity_base" >
         </activity>
+        <activity android:name="ProfilePictureActivity"></activity>
     </application>
 
 </manifest>

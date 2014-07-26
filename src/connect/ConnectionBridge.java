@@ -305,14 +305,12 @@ public class ConnectionBridge extends Activity{
 	}
 
 	// 이미지 업로드
-	public String insertImage(String methodUrl, File uploadFile, Context context) {
+	public String insertImage(String methodUrl, File uploadFile, Context context,  String email) {
 		String result = null;
-		String email = "koo10682@gmail.com";
+		// String email = "koo10682@gmail.com";
 
-		// 저장소 객체를 생성
-		//SharedPreferences shared_user_info = getSharedPreferences("user_info", 0);
-		//String email = shared_user_info.getString("user_email", "");
-		Log.d("kkm",email);
+		
+		Log.d("kim","ConnectionBridge email ->" + email);
 		
 		// String email = user_picture.txt_email.getText().toString();
 		String targetUrl = getFullUrl(ItDocConstants.ADDRESS_IMG_SERVER_HOST,

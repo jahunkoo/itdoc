@@ -126,8 +126,10 @@ public class UserActivity extends Activity implements View.OnClickListener {
 					 */
 					SharedPreferences shared_user_info = getSharedPreferences("user_info", 0);
 					SharedPreferences.Editor editor = shared_user_info.edit();
+					
 					editor.putString("user_email", txt_email.getText().toString());
 					editor.putString("user_pwd", txt_pwd.getText().toString());
+					
 					editor.commit();
 
 					Toast.makeText(this, Sentence.successJoin,
